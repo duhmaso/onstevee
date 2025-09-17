@@ -1,0 +1,56 @@
+body {
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 10px;
+  font-family: Arial, sans-serif;
+  color: black;
+  text-shadow: 1px 1px 2px white;
+  
+  background-image: url('images/speaker-high-volume_padded_3000x3000.png'); /* path to your background image */
+  background-size: cover;       /* makes the image cover the whole body */
+  background-repeat: no-repeat; /* prevents repeating the image */
+  background-position: center;  /* centers
+}
+
+/* Cash App donation button */
+.cash-btn {
+  background-color: #00c244;  /* Cash App green */
+  width: 80px;
+  height: 80px;
+  font-size: 28px;
+  border-radius: 50%;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cash-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+.cash-btn:active {
+  transform: scale(0.95);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+
+
+
+img {
+  margin: 10px 0;
+}
+
+audio {
+  display: block;
+  margin: 10px 0;
+}
+
+h1, h2 {
+  color: black;
+}

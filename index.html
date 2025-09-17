@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>subbasses.com</title>
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Font Awesome for play/pause icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+  <header>
+    <h1>SUBBASSES</h1>
+  </header>
+
+  <!-- Swag Section -->
+  <section id="swag">
+    <p>immerse yoursefl into subbasses</p>
+    <img src="images/speaker-high-volume_padded_4000x4000.png" alt="subbasses" width="400">
+  </section>
+
+  <!-- Music Section with WaveSurfer Playlist -->
+  <section id="music">
+    <p>Browse through some sounds</p>
+
+    <!-- Waveform container -->
+    <div id="waveform"></div>
+
+    <!-- Play/Pause button -->
+    <button id="playBtn" class="wave-btn">
+      <i class="fa fa-play"></i>
+    </button>
+
+    <!-- Next Track button -->
+    <button id="nextBtn" class="wave-btn">
+      <i class="fa fa-forward"></i>
+    </button>
+  </section>
+
+  <!-- Donate Section -->
+  <section id="donate">
+    <h2>Support My Work</h2>
+    <p>If you enjoy my work, consider making a donation:</p>
+
+    <!-- PayPal -->
+    <form action="https://www.paypal.com" method="post" target="_blank">
+      <input type="hidden" name="hosted_button_id" value="YOUR_PAYPAL_BUTTON_ID">
+      <input type="submit" value="Donate via PayPal">
+    </form>
+
+    <br>
+
+    <!-- Cash App -->
+    <a href="https://cash.app/$duhmaso" target="_blank">
+      <button class="wave-btn cash-btn">
+        <i class="fa-brands fa-cc-visa"></i>
+      </button>
+    </a>
+    <p>Donate via Cash App</p>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 SUBBASSES. All rights reserved.</p>
+  </footer>
+
+  <!-- WaveSurfer.js library -->
+  <script src="https://unpkg.com/wavesurfer.js"></script>
+
+  <!-- Initialize WaveSurfer Playlist -->
+  <script>
+    window.onload = function() {
+      const tracks = [
+        'music/isn 140.mp3',
+        'music/hav v2 140.mp3',
+      ];
+      let currentTrack = 0;
+
+      const wavesurfer = WaveSurfer.create({
+        container: '#waveform',
+        waveColor: 'violet',
+        progressColor: 'purple',
+        height: 100
+      });
+
+      wavesurfer.load(tracks[currentTrack]);
+
+      // Play/Pause button
+      const playBtn = document.getElementById('playBtn');
+      playBtn.addEventListener('click', () => {
+        wavesurfer.playPause();
+        const icon = playBtn.querySelector('i');
+        if (wavesurfer.isPlaying()) {
+          icon.classList.replace('fa-play', 'fa-pause');
+        } else {
+          icon.classList.replace('fa-pause', 'fa-play');
+        }
+      });
+
+      // Next Track button
+      const nextBtn = document.getElementById('nextBtn');
+      nextBtn.addEventListener('click', () => {
+        currentTrack = (currentTrack + 1) % tracks.length;
+        wavesurfer.load(tracks[currentTrack]);
+        const icon = playBtn.querySelector('i');
+        icon.classList.replace('fa-pause', 'fa-play'); // reset icon
+      });
+    };
+  </script>
+</body>
+</html>
+
