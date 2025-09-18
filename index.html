@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>subbasses.com</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/x-icon" href="images/speaker-high-volume_padded_4000x4000-removebg-preview.png">
 
   <!-- Font Awesome for play/pause icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -16,26 +17,42 @@
 
   <!-- Swag Section -->
   <section id="swag">
-    <p>immerse yoursefl into subbasses</p>
-    <img src="images/speaker-high-volume_padded_4000x4000.png" alt="subbasses" width="400">
+    <p>immerse yourself into the subbass</p>
+    <img src="images/speaker-high-volume_padded_4000x4000-removebg-preview.png" alt="subbasses" width="400">
   </section>
 
   <!-- Music Section with WaveSurfer Playlist -->
   <section id="music">
     <p>Browse through some sounds</p>
 
+    <!-- Track Name -->
+    <div id="trackName">No track loaded</div>
+
     <!-- Waveform container -->
     <div id="waveform"></div>
 
-    <!-- Play/Pause button -->
-    <button id="playBtn" class="wave-btn">
-      <i class="fa fa-play"></i>
-    </button>
+    <!-- Controls -->
+    <div class="controls">
+      <!-- Previous Track -->
+      <button id="prevBtn" class="wave-btn">
+        <i class="fa fa-backward"></i>
+      </button>
 
-    <!-- Next Track button -->
-    <button id="nextBtn" class="wave-btn">
-      <i class="fa fa-forward"></i>
-    </button>
+      <!-- Play/Pause button -->
+      <button id="playBtn" class="wave-btn">
+        <i class="fa fa-play"></i>
+      </button>
+
+      <!-- Next Track -->
+      <button id="nextBtn" class="wave-btn">
+        <i class="fa fa-forward"></i>
+      </button>
+
+      <!-- Download button -->
+      <a id="downloadBtn" class="wave-btn" href="#" download>
+        <i class="fa fa-download"></i>
+      </a>
+    </div>
   </section>
 
   <!-- Donate Section -->
@@ -44,7 +61,7 @@
     <p>If you enjoy my work, consider making a donation:</p>
 
     <!-- PayPal -->
-    <form action="https://www.paypal.com" method="post" target="_blank">
+    <form action="https://www.paypal.biz/okmaso" method="post" target="_blank">
       <input type="hidden" name="hosted_button_id" value="YOUR_PAYPAL_BUTTON_ID">
       <input type="submit" value="Donate via PayPal">
     </form>
@@ -73,6 +90,16 @@
       const tracks = [
         'music/isn 140.mp3',
         'music/hav v2 140.mp3',
+        'music/wash 140.mp3',
+        'music/angls 133.mp3',
+        'music/beh 160.mp3',
+        'music/cancerr 135.mp3',
+        'music/lab v 140.mp3',
+        'music/pass 144.mp3',
+        'music/rp 145.mp3',
+        'music/therideth 132.mp3',
+        'music/tiger 140.mp3',
+
       ];
       let currentTrack = 0;
 
@@ -83,10 +110,33 @@
         height: 100
       });
 
-      wavesurfer.load(tracks[currentTrack]);
+      // Buttons
+      const playBtn = document.getElementById('playBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      const prevBtn = document.getElementById('prevBtn');
+      const downloadBtn = document.getElementById('downloadBtn');
+      const trackNameDiv = document.getElementById('trackName');
+
+      // Load track and update UI
+      function loadTrack(filePath) {
+        wavesurfer.load(filePath);
+
+        // Extract file name
+        let fileName = filePath.split('/').pop().replace('.mp3', '');
+        trackNameDiv.textContent = fileName;
+
+        // Update download link
+        downloadBtn.href = filePath;
+
+        // Reset play button icon
+        const icon = playBtn.querySelector('i');
+        icon.classList.replace('fa-pause', 'fa-play');
+      }
+
+      // Load first track
+      loadTrack(tracks[currentTrack]);
 
       // Play/Pause button
-      const playBtn = document.getElementById('playBtn');
       playBtn.addEventListener('click', () => {
         wavesurfer.playPause();
         const icon = playBtn.querySelector('i');
@@ -98,15 +148,17 @@
       });
 
       // Next Track button
-      const nextBtn = document.getElementById('nextBtn');
       nextBtn.addEventListener('click', () => {
         currentTrack = (currentTrack + 1) % tracks.length;
-        wavesurfer.load(tracks[currentTrack]);
-        const icon = playBtn.querySelector('i');
-        icon.classList.replace('fa-pause', 'fa-play'); // reset icon
+        loadTrack(tracks[currentTrack]);
+      });
+
+      // Previous Track button
+      prevBtn.addEventListener('click', () => {
+        currentTrack = (currentTrack - 1 + tracks.length) % tracks.length;
+        loadTrack(tracks[currentTrack]);
       });
     };
   </script>
 </body>
 </html>
-
