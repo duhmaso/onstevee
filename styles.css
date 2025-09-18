@@ -14,6 +14,19 @@ body {
   background-position: center;  /* centers */
 }
 
+.legal-disclaimer {
+  font-size: 14px;
+  color: color(from color srgb r g b);
+  font-weight: bold;
+  margin: 15px 0;
+}
+
+.legal-disclaimer a {
+  color: navy;
+  text-decoration: underline;
+}
+
+
 /* Cash App donation button */
 .cash-btn {
   background-color: #00c244;  /* Cash App green */
