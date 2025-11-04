@@ -48,17 +48,11 @@ header h1 { margin: 0; font-weight: 700; letter-spacing: 2px; font-size: 34px; c
   padding: 6px 12px;
   display: inline-block;
   background: rgba(123,44,255,0.12);
-  border-radius: 999px; /* pill */
+  border-radius: 999px;
   max-width: 100%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
-}
-
-/* Slight hover emphasis for desktop */
-@media (hover: hover) and (min-width: 420px) {
-  #trackName:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(123,44,255,0.12); }
 }
 
 @media (max-width: 420px) {
@@ -97,4 +91,3 @@ footer { text-align:center; padding:28px 8px; opacity:0.85; color: #cfcfe0; }
 /* Small accessibility tweaks */
 a { color: #d6b9ff; }
 button, a.wave-btn { text-decoration: none; border: none; }
-

@@ -4,19 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>subbasses.com</title>
-  <link rel="stylesheet" href="styles/original.css">
+  <link rel="stylesheet" href="styles.css">
   <link rel="icon" type="image/x-icon" href="images/speaker-high-volume_padded_4000x4000-removebg-preview.png">
 
-  <!-- font for play/pause button -->
+  <!-- Font Awesome for play/pause icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
   <header>
-    <img src="images/cooltext494848403796185.png" alt="SUBBASSES Logo" class="header-logo">
-
+    <h1>SUBBASSES</h1>
   </header>
 
-  <!--Swag Section -->
+  <!-- Swag Section -->
   <section id="swag">
     <p>immerse yourself into the subbass</p>
     <img src="images/speaker-high-volume_padded_4000x4000-removebg-preview.png" alt="subbasses" width="400">
@@ -32,7 +31,7 @@
     <!-- Waveform container -->
     <div id="waveform"></div>
 
-    
+    <!-- Controls -->
     <div class="controls">
       <!-- Previous Track -->
       <button id="prevBtn" class="wave-btn">
@@ -65,20 +64,19 @@
     <p>If you enjoy my work, consider making a donation:</p>
 
     <!-- PayPal -->
+    <form action="https://www.paypal.biz/okmaso" method="post" target="_blank">
+      <input type="hidden" name="hosted_button_id" value="YOUR_PAYPAL_BUTTON_ID">
+      <input type="submit" value="Donate via PayPal">
+    </form>
 
-    <div class="center-donate-btn">
-  <form action="https://www.paypal.biz/okmaso" method="post" target="_blank">
-        <input type="hidden" name="hosted_button_id" value="YOUR_PAYPAL_BUTTON_ID">
-        <button type="submit" class="wave-btn cash-btn paypal-btn">
-          <i class="fa-brands fa-paypal"></i>
-        </button>
-      </form>
-      <a href="https://cash.app/$duhmaso" target="_blank" style="display:inline-block;">
-        <button class="wave-btn cash-btn">
-          <i class="fa-brands fa-cc-visa"></i>
-        </button>
-      </a>
-    </div>
+    <br>
+
+    <!-- Cash App -->
+    <a href="https://cash.app/$duhmaso" target="_blank">
+      <button class="wave-btn cash-btn">
+        <i class="fa-brands fa-cc-visa"></i>
+      </button>
+    </a>
     <p>Donate via Cash App</p>
   </section>
 
@@ -108,7 +106,6 @@
         'music/plea 140.mp3',
         'music/cr88 140.mp3',
         'music/greek 120.mp3',
-        'music/gex 140.mp3',
 
       ];
       let currentTrack = 0;

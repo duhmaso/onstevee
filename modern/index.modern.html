@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SUBBASSES — immersive subbass sounds and beats. Browse, play, and download tracks.">
+  <title>subbasses.com</title>
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/x-icon" href="images/speaker-high-volume_padded_4000x4000-removebg-preview.png">
+
+  <!-- Font Awesome for play/pause icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+  <header>
+    <h1>SUBBASSES</h1>
+  </header>
+
+  <div class="container">
+    <!-- Swag Section -->
+    <section id="swag" class="card">
+      <div>
+        <p>Immerse yourself into the subbass</p>
+      </div>
+      <img src="images/speaker-high-volume_padded_4000x4000-removebg-preview.png" alt="subbasses">
+    </section>
+
+    <!-- Music Section with WaveSurfer Playlist -->
+    <section id="music" class="card">
+      <p>Browse through some sounds</p>
+
+      <!-- Track Name -->
+      <div id="trackName">No track loaded</div>
+
+      <!-- Waveform container -->
+      <div id="waveform"></div>
+
+      <!-- Controls -->
+      <div class="controls">
+        <button id="prevBtn" class="wave-btn" aria-label="Previous track">
+          <i class="fa fa-backward"></i>
+        </button>
+        <button id="playBtn" class="wave-btn" aria-label="Play/Pause">
+          <i class="fa fa-play"></i>
+        </button>
+        <button id="nextBtn" class="wave-btn" aria-label="Next track">
+          <i class="fa fa-forward"></i>
+        </button>
+        <a id="downloadBtn" class="wave-btn" href="#" download aria-label="Download track">
+          <i class="fa fa-download"></i>
+        </a>
+      </div>
+
+      <p class="legal-disclaimer">
+        ⚠️ By downloading or using any material on this site, you automatically agree to our 
+        <a href="contract/Artist Producer Agr (Advance + royalty + pub).pdf" target="_blank">Legal Agreement (PDF)</a>.
+      </p>
+    </section>
+
+    <!-- Donate Section -->
+    <section id="donate" class="card">
+      <h2>Support My Work</h2>
+      <p>If you enjoy my work, consider making a donation:</p>
+
+      <!-- PayPal -->
+      <form action="https://www.paypal.biz/okmaso" method="post" target="_blank">
+        <input type="hidden" name="hosted_button_id" value="YOUR_PAYPAL_BUTTON_ID">
+        <input type="submit" value="Donate via PayPal" class="wave-btn">
+      </form>
+
+      <div class="donate-row">
+        <a href="https://cash.app/$duhmaso" target="_blank">
+          <button class="wave-btn cash-btn" aria-label="Donate via Cash App">
+            <i class="fa-brands fa-cc-visa"></i>
+          </button>
+        </a>
+        <p class="donate-note">Donate via Cash App</p>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 SUBBASSES. Creative Commons license.</p>
+    <a href="contract.html">Terms & Agreement</a>
+  </footer>
+
+  <!-- WaveSurfer.js library -->
+  <script src="https://unpkg.com/wavesurfer.js"></script>
+
+  <!-- Initialize WaveSurfer Playlist -->
+  <script>
+    window.onload = function() {
+      const tracks = [
+        'music/isn 140.mp3',
+        'music/hav v2 140.mp3',
+        'music/wash 140.mp3',
+        'music/rp 145.mp3',
+        'music/tiger 140.mp3',
+        'music/autumn 140.mp3',
+        'music/hiro_2 140.mp3',
+        'music/index 157.mp3',
+        'music/sunset 160.mp3',
+        'music/rrainy 147.mp3',
+        'music/plea 140.mp3',
+        'music/cr88 140.mp3',
+        'music/greek 120.mp3'
+      ];
+      let currentTrack = 0;
+
+      const wavesurfer = WaveSurfer.create({
+        container: '#waveform',
+        waveColor: '#b58cff',
+        progressColor: '#7b2cff',
+        height: 90,
+        responsive: true
+      });
+
+      // Buttons
+      const playBtn = document.getElementById('playBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      const prevBtn = document.getElementById('prevBtn');
+      const downloadBtn = document.getElementById('downloadBtn');
+      const trackNameDiv = document.getElementById('trackName');
+
+      // Load track and update UI
+      function loadTrack(filePath) {
+        wavesurfer.load(filePath);
+        let fileName = filePath.split('/').pop().replace('.mp3', '');
+        trackNameDiv.textContent = fileName;
+        downloadBtn.href = filePath;
+        const icon = playBtn.querySelector('i');
+        if (icon) icon.classList.replace('fa-pause', 'fa-play');
+      }
+
+      // Load first track
+      loadTrack(tracks[currentTrack]);
+
+      wavesurfer.on('play', () => {
+        const icon = playBtn.querySelector('i');
+        if (icon) icon.classList.replace('fa-play', 'fa-pause');
+      });
+      wavesurfer.on('pause', () => {
+        const icon = playBtn.querySelector('i');
+        if (icon) icon.classList.replace('fa-pause', 'fa-play');
+      });
+
+      // Play/Pause button
+      playBtn.addEventListener('click', () => {
+        wavesurfer.playPause();
+      });
+
+      // Next Track button
+      nextBtn.addEventListener('click', () => {
+        currentTrack = (currentTrack + 1) % tracks.length;
+        loadTrack(tracks[currentTrack]);
+      });
+
+      // Previous Track button
+      prevBtn.addEventListener('click', () => {
+        currentTrack = (currentTrack - 1 + tracks.length) % tracks.length;
+        loadTrack(tracks[currentTrack]);
+      });
+    };
+  </script>
+</body>
+</html>
