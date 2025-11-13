@@ -1,6 +1,6 @@
 /* Reset + base */
 * { box-sizing: border-box; }
-html, body { height: 100%; }
+html, body { /* Remove forced full viewport height so outer border hugs content */ height: auto; }
 body {
   margin: 0;
   font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
@@ -8,6 +8,8 @@ body {
   color: #e9e9ef;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* Ensure border wraps tightly around content */
+  display: block; /* explicit */
 }
 
 /* Page layout */
