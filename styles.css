@@ -98,3 +98,30 @@ footer { text-align:center; padding:28px 8px; opacity:0.85; color: #cfcfe0; }
 a { color: #d6b9ff; }
 button, a.wave-btn { text-decoration: none; border: none; }
 
+/* ---------------- Contract page readability and framing ---------------- */
+/* Apply page frame similar to index.html for pages using this stylesheet (e.g., contract.html) */
+body {
+  border: 2px solid grey;
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 10px;
+}
+
+/* High-contrast content panel over background imagery */
+.legal-content {
+  background: rgba(255, 255, 255, 0.92);
+  color: #111;
+  padding: 16px;
+  border-radius: 12px;
+  line-height: 1.6;
+}
+
+.legal-content h2,
+.legal-content h3,
+.legal-content h4 { color: #111; margin-top: 12px; }
+.legal-content a { color: #0c59e7; text-decoration: underline; }
+.legal-content ul { padding-left: 20px; }
+.legal-content hr { border: none; height: 1px; background: #ddd; margin: 16px 0; }
+
