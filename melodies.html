@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>subbasses.com</title>
+  <title>subbasses | melodies</title>
   <link rel="stylesheet" href="styles/original.css">
   <link rel="icon" type="image/x-icon" href="images/speaker-high-volume_padded_4000x4000-removebg-preview.png">
 
@@ -27,7 +27,7 @@
 
   <!-- Music Section with WaveSurfer Playlist -->
   <section id="music">
-    <p>Browse through some sounds</p>
+    <p>Browse through some melodies</p>
 
     <!-- Track Name -->
     <p id="trackName">No track loaded</p>
@@ -101,24 +101,11 @@
   <script>
     window.onload = function() {
       const tracks = [
-        'music/fysh 140.mp3',
-        'music/level 120.mp3',
-        'music/section 131.mp3',
-        'music/thurs 140.mp3',
-        'music/isn 140.mp3',
-        'music/hav v2 140.mp3',
-        'music/wash 140.mp3',
-        'music/rp 145.mp3',
-        'music/tiger 140.mp3',
-        'music/autumn 140.mp3',
-        'music/hiro_2 140.mp3',
-        'music/index 157.mp3',
-        'music/sunset 160.mp3',
-        'music/rrainy 147.mp3',
-        'music/plea 140.mp3',
-        'music/cr88 140.mp3',
-        'music/greek 120.mp3',
-        'music/gex 140.mp3',
+        // Add your melody tracks here
+        // Example:
+        // 'music/melodies/melody1.mp3',
+        // 'music/melodies/melody2.mp3',
+        // 'music/melodies/melody3.mp3',
 
       ];
       let currentTrack = 0;
@@ -153,8 +140,14 @@
         icon.classList.replace('fa-pause', 'fa-play');
       }
 
-      // Load first track
-      loadTrack(tracks[currentTrack]);
+      // Load first track if available, otherwise disable controls
+      if (tracks.length > 0) {
+        loadTrack(tracks[currentTrack]);
+      } else {
+        trackNameDiv.textContent = 'No tracks yet';
+        downloadBtn.removeAttribute('href');
+        [playBtn, nextBtn, prevBtn].forEach(btn => btn.disabled = true);
+      }
 
       // Play/Pause button
       playBtn.addEventListener('click', () => {
