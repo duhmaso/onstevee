@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>subbasses.com</title>
-  <link rel="stylesheet" href="styles/original.css">
+  <link rel="stylesheet" href="styles/final.css">
   <link rel="icon" type="image/x-icon" href="images/speaker-high-volume_padded_4000x4000-removebg-preview.png">
 
   <!-- font for play/pause button -->
@@ -14,14 +14,30 @@
   <header>
     <img src="images/cooltext494848403796185.png" alt="SUBBASSES Logo" class="header-logo">
     <nav>
-      <a href="index.html">Beats</a> | 
+      <a href="index.html">Beats</a>
       <a href="melodies.html">Melodies</a>
+      <a href="contract.html">Licensing</a>
+      <a href="contact.html">Contact</a>
     </nav>
+    <div class="social-links">
+      <a href="https://instagram.com/duhmaso" target="_blank" aria-label="Instagram">
+        <i class="fa-brands fa-instagram"></i>
+      </a>
+      <a href="https://x.com/duhmaso" target="_blank" aria-label="Twitter/X">
+        <i class="fa-brands fa-x-twitter"></i>
+      </a>
+      <a href="https://soundcloud.com/duhmaso" target="_blank" aria-label="SoundCloud">
+        <i class="fa-brands fa-soundcloud"></i>
+      </a>
+      <a href="https://open.spotify.com/artist/2NKX1Fu1FURAUsjKDGtycs?si=Zx05H2cjRtKi8cL98LDOzA" target="_blank" aria-label="Spotify">
+        <i class="fa-brands fa-spotify"></i>
+      </a>
+    </div>
   </header>
 
   <!--Swag Section -->
   <section id="swag">
-    <p>immerse yourself into the subbass</p>
+    <p><em>immerse yourself into the subbass</em></p>
     <img src="images/speaker-high-volume_padded_4000x4000-removebg-preview.png" alt="subbasses" width="400">
   </section>
 
@@ -33,10 +49,10 @@
     <p id="trackName">No track loaded</p>
 
     <!-- Waveform container -->
-    <div id="waveform"></div>
+    <figure id="waveform"></figure>
 
     
-    <div class="controls">
+    <section class="controls">
       <!-- Previous Track -->
       <button id="prevBtn" class="wave-btn">
         <i class="fa fa-backward"></i>
@@ -62,7 +78,7 @@
         Non‑commercial use under <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY‑NC 4.0</a>;
         commercial use requires a <a href="contract/Artist Producer Agr (Advance + royalty + pub).pdf" target="_blank">license</a>.
       </p>
-    </div>
+    </section>
   </section>
 
   <!-- Donate Section -->
@@ -72,7 +88,7 @@
 
     <!-- PayPal -->
 
-    <div class="center-donate-btn">
+    <section class="center-donate-btn">
       <form action="https://www.paypal.biz/okmaso" method="post" target="_blank">
         <input type="hidden" name="hosted_button_id" value="YOUR_PAYPAL_BUTTON_ID">
         <button type="submit" class="wave-btn cash-btn paypal-btn">
@@ -82,7 +98,7 @@
       <a href="https://cash.app/$duhmaso" target="_blank" class="wave-btn cash-btn">
         <i class="fa-brands fa-cc-visa"></i>
       </a>
-    </div>
+    </section>
     
   </section>
 
@@ -101,15 +117,17 @@
   <script>
     window.onload = function() {
       const tracks = [
+        // Beats
         'music/fysh 140.mp3',
         'music/level 120.mp3',
         'music/section 131.mp3',
-        'music/thurs 140.mp3',
+        'music/thurs 135.mp3',
         'music/isn 140.mp3',
         'music/hav v2 140.mp3',
         'music/wash 140.mp3',
         'music/rp 145.mp3',
         'music/tiger 140.mp3',
+        'music/gex 140.mp3',
         'music/autumn 140.mp3',
         'music/hiro_2 140.mp3',
         'music/index 157.mp3',
@@ -117,9 +135,7 @@
         'music/rrainy 147.mp3',
         'music/plea 140.mp3',
         'music/cr88 140.mp3',
-        'music/greek 120.mp3',
-        'music/gex 140.mp3',
-
+        'music/greek 120.mp3'
       ];
       let currentTrack = 0;
 
