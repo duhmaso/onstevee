@@ -32,11 +32,17 @@ body {
   border: 2px solid grey;     
   border-radius: 15px;         
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); 
+  box-sizing: border-box;
+  overflow-x: hidden;
 
   background-image: url('images/speaker-high-volume_padded_3000x3000.png'); 
   background-size: cover;     
   background-repeat: no-repeat; 
   background-position: center;  /* center */
+}
+
+* {
+  box-sizing: border-box;
 }
 
 .legal-disclaimer {
@@ -90,12 +96,13 @@ audio {
 
 /* Emoji speaker styling to match original image size */
 .emoji-speaker {
-  font-size: 400px;
+  font-size: 400px !important;
   line-height: 1;
-  display: block;
+  display: inline-block;
   margin: 10px auto;
-  max-width: 90%;
-  overflow: hidden;
+  width: auto;
+  height: 400px;
+  text-align: center;
 }
 
 /* Headers */
@@ -279,6 +286,11 @@ nav a:active {
 
 /* Responsive: stack columns on small screens */
 @media (max-width: 768px) {
+  body {
+    padding: 8px;
+    overflow-x: hidden;
+  }
+
   .two-column-layout {
     grid-template-columns: 1fr;
   }
@@ -289,6 +301,8 @@ nav a:active {
     flex-direction: column;
     align-items: center;
     padding: 5px;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .social-links {
@@ -303,18 +317,22 @@ nav a:active {
 
   nav {
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 6px;
     max-width: 100%;
-    padding: 0 5px;
+    padding: 0 10px;
+    justify-content: center;
+    box-sizing: border-box;
   }
 
   nav a {
-    font-size: 14px;
-    padding: 5px 10px;
+    font-size: 13px;
+    padding: 5px 9px;
+    flex-shrink: 1;
   }
 
   .emoji-speaker {
-    font-size: 250px;
+    font-size: 250px !important;
+    height: 250px;
   }
 
   #swag {
@@ -373,7 +391,8 @@ nav a:active {
   }
 
   .emoji-speaker {
-    font-size: 140px;
+    font-size: 140px !important;
+    height: 140px;
   }
 
   #swag {
