@@ -5,12 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>subbasses.com</title>
   <link rel="stylesheet" href="styles/final.css">
+  <link rel="stylesheet" href="styles/tuneup.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔊</text></svg>">
 
   <!-- font for play/pause button -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
-<body>
+<body class="tuneup-page">
   <header>
     <img src="images/cooltext494848403796185.png" alt="SUBBASSES Logo" class="header-logo">
     <nav>
@@ -38,7 +39,7 @@
   <!--Swag Section -->
   <section id="swag">
     <p><em>immerse yourself into the subbass</em></p>
-    <span class="emoji-speaker" aria-label="speaker">🔊</span>
+    <img src="images/subbasses1.png" alt="Subbasses Image" class="swag-image">
   </section>
 
   <!-- Music Section with WaveSurfer Playlist -->
@@ -118,31 +119,27 @@
     window.onload = function() {
       const tracks = [
         // Beats
-        'music/fysh 140.mp3',
-        'music/level 120.mp3',
-        'music/section 131.mp3',
-        'music/thurs 135.mp3',
-        'music/isn 140.mp3',
-        'music/hav v2 140.mp3',
-        'music/wash 140.mp3',
-        'music/rp 145.mp3',
-        'music/tiger 140.mp3',
-        'music/gex 140.mp3',
-        'music/autumn 140.mp3',
-        'music/hiro_2 140.mp3',
-        'music/index 157.mp3',
-        'music/sunset 160.mp3',
-        'music/rrainy 147.mp3',
-        'music/plea 140.mp3',
-        'music/cr88 140.mp3',
-        'music/greek 120.mp3'
+        "music/adjust 145.mp3",
+        "music/area 140.mp3",
+        "music/arturia 140.mp3",
+        "music/cherry 140.mp3",
+        "music/cm 140.mp3",
+        "music/glad u met 113.mp3",
+        "music/hover 125.mp3",
+        "music/majord 150.mp3",
+        "music/netwrk 142.mp3",
+        "music/okthen 135.mp3",
+        "music/paul 170.mp3",
+        "music/sweetlyfe 154.mp3",
+        "music/type 145.mp3",
+        "music/wisp unf 148.mp3"
       ];
       let currentTrack = 0;
 
       const wavesurfer = WaveSurfer.create({
         container: '#waveform',
-        waveColor: 'violet',
-        progressColor: 'purple',
+        waveColor: '#7d8cff',
+        progressColor: '#232a63',
         height: 100
       });
 

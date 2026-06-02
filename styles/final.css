@@ -89,6 +89,14 @@ img {
   margin: 10px 0;
 }
 
+.swag-image {
+  display: block;
+  width: min(100%, 520px);
+  max-width: 100%;
+  height: auto;
+  margin: 10px auto;
+}
+
 audio {
   display: block;
   margin: 10px 0;
@@ -96,12 +104,13 @@ audio {
 
 /* Emoji speaker styling to match original image size */
 .emoji-speaker {
-  font-size: 400px !important;
+  font-size: clamp(140px, 45vw, 400px) !important;
   line-height: 1;
   display: inline-block;
   margin: 10px auto;
   width: auto;
-  height: 400px;
+  max-width: 100%;
+  height: auto;
   text-align: center;
 }
 

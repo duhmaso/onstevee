@@ -5,12 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>subbasses | melodies</title>
   <link rel="stylesheet" href="styles/final.css">
+  <link rel="stylesheet" href="styles/tuneup.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔊</text></svg>">
 
   <!-- font for play/pause button -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
-<body>
+<body class="tuneup-page">
   <header>
     <img src="images/cooltext494848403796185.png" alt="SUBBASSES Logo" class="header-logo">
     <nav>
@@ -38,7 +39,7 @@
   <!--Swag Section -->
   <section id="swag">
     <p><em>immerse yourself into the subbass</em></p>
-    <span class="emoji-speaker" aria-label="speaker">🔊</span>
+    <img src="images/subbasses1.png" alt="Subbasses Image" class="swag-image">
   </section>
 
   <!-- Music Section with WaveSurfer Playlist -->
@@ -117,25 +118,25 @@
   <script>
     window.onload = function() {
       const tracks = [
-        "music/melodies/loading screen main menu 138.mp3",
-        "music/melodies/especial 148.wav",
-        "music/melodies/mela 155.wav",
-        "music/melodies/motional 140.wav",
-        "music/melodies/nomic 140.wav",
-        "music/melodies/primo 140.wav",
-        "music/melodies/seed 140.wav",
-        "music/melodies/three 133.wav",
-        "music/melodies/zen 135",
-        "music/melodies/talia 138.wav",
-        "music/melodies/study 120.mp3",
-        
+        'music/melodies/cntr 152.wav',
+        'music/melodies/core 120.mp3',
+        'music/melodies/emate 140.wav',
+        'music/melodies/hendon 140.wav',
+        'music/melodies/inner core 120.wav',
+        'music/melodies/often.wav',
+        'music/melodies/outer 120.wav',
+        'music/melodies/rain 136.mp3',
+        'music/melodies/serum 2night 134.wav',
+        'music/melodies/sire 140 d major.wav',
+        'music/melodies/type 145.mp3',
+        'music/melodies/wired 160.mp3'
       ];
       let currentTrack = 0;
 
       const wavesurfer = WaveSurfer.create({
         container: '#waveform',
-        waveColor: 'violet',
-        progressColor: 'purple',
+        waveColor: '#7d8cff',
+        progressColor: '#232a63',
         height: 100
       });
 

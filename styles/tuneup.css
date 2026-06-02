@@ -1,0 +1,80 @@
+/* Shared tune-up styles for production pages */
+
+body.tuneup-page {
+  max-width: 980px;
+  padding: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  border-radius: 22px;
+  box-shadow: 0 22px 40px rgba(0, 0, 0, 0.18), inset 0 0 0 1px rgba(255, 255, 255, 0.35);
+  background-image:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(255, 255, 255, 0.8)),
+    url('images/speaker-high-volume_padded_3000x3000.png');
+  background-size: cover;
+  background-position: center;
+  text-shadow: none;
+}
+
+body.tuneup-page header {
+  padding: 8px 8px 2px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(4px);
+}
+
+body.tuneup-page nav a,
+body.tuneup-page .social-links a,
+body.tuneup-page #trackName {
+  background: rgba(255, 255, 255, 0.75);
+}
+
+body.tuneup-page #swag,
+body.tuneup-page #music,
+body.tuneup-page #donate,
+body.tuneup-page footer,
+body.tuneup-page .legal-content,
+body.tuneup-page #contact-section {
+  margin-top: 14px;
+  padding: 14px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.58);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+body.tuneup-page .swag-image {
+  width: min(100%, 540px);
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.16));
+}
+
+body.tuneup-page #waveform {
+  margin: 14px auto;
+  max-width: 720px;
+  border-radius: 14px;
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+body.tuneup-page .wave-btn {
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+}
+
+body.tuneup-page .wave-btn:hover {
+  transform: translateY(-2px) scale(1.04);
+}
+
+@media (max-width: 768px) {
+  body.tuneup-page {
+    padding: 10px;
+    border-radius: 14px;
+  }
+
+  body.tuneup-page #swag,
+  body.tuneup-page #music,
+  body.tuneup-page #donate,
+  body.tuneup-page footer,
+  body.tuneup-page .legal-content,
+  body.tuneup-page #contact-section {
+    padding: 10px;
+    border-radius: 12px;
+  }
+}
