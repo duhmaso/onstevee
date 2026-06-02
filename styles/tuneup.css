@@ -66,6 +66,7 @@ body.tuneup-page .wave-btn:hover {
   body.tuneup-page {
     padding: 10px;
     border-radius: 14px;
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.15);
   }
 
   body.tuneup-page #swag,
@@ -76,5 +77,68 @@ body.tuneup-page .wave-btn:hover {
   body.tuneup-page #contact-section {
     padding: 10px;
     border-radius: 12px;
+  }
+
+  body.tuneup-page #waveform {
+    max-width: 100%;
+    margin: 10px auto;
+    padding: 6px;
+  }
+
+  body.tuneup-page .controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  body.tuneup-page .wave-btn,
+  body.tuneup-page .cash-btn {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  body.tuneup-page .legal-disclaimer {
+    width: 100%;
+    margin-top: 10px;
+    line-height: 1.45;
+  }
+}
+
+@media (max-width: 420px) {
+  body.tuneup-page {
+    padding: 7px;
+    border-width: 1px;
+    border-radius: 10px;
+  }
+
+  body.tuneup-page header {
+    padding: 6px 6px 2px;
+    border-radius: 10px;
+  }
+
+  body.tuneup-page #swag,
+  body.tuneup-page #music,
+  body.tuneup-page #donate,
+  body.tuneup-page footer,
+  body.tuneup-page .legal-content,
+  body.tuneup-page #contact-section {
+    margin-top: 9px;
+    padding: 8px;
+    border-radius: 10px;
+  }
+
+  body.tuneup-page nav {
+    gap: 5px;
+  }
+
+  body.tuneup-page nav a {
+    padding: 4px 8px;
+    font-size: 11px;
+  }
+
+  body.tuneup-page #trackName {
+    font-size: 13px;
+    max-width: 100%;
   }
 }
