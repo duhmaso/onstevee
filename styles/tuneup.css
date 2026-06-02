@@ -8,7 +8,7 @@ body.tuneup-page {
   box-shadow: 0 22px 40px rgba(0, 0, 0, 0.18), inset 0 0 0 1px rgba(255, 255, 255, 0.35);
   background-image:
     linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(255, 255, 255, 0.8)),
-    url('images/speaker-high-volume_padded_3000x3000.png');
+    url('../images/speaker-high-volume_padded_3000x3000.png');
   background-size: cover;
   background-position: center;
   text-shadow: none;
