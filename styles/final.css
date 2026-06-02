@@ -35,7 +35,7 @@ body {
   box-sizing: border-box;
   overflow-x: hidden;
 
-  background-image: url('../images/speaker-high-volume_padded_3000x3000.png'); 
+  background-image: url('../images/speaker-high-volume_3000x3000.png'); 
   background-size: cover;     
   background-repeat: no-repeat; 
   background-position: center;  /* center */
