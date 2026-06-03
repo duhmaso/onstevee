@@ -4,23 +4,164 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>subbasses.com</title>
+  <script>
+    (function () {
+      if (window.location.protocol === 'http:' || window.location.protocol === 'https:') {
+        if (window.location.pathname.endsWith('/index.html')) {
+          var cleanPath = window.location.pathname.replace(/index\.html$/, '');
+          window.history.replaceState({}, '', cleanPath + window.location.search + window.location.hash);
+        }
+      }
+    })();
+  </script>
   <link rel="stylesheet" href="styles/final.css">
   <link rel="stylesheet" href="styles/tuneup.css">
-  <link rel="icon" type="image/png" href="images/subbasses1.png">
+  <link rel="icon" type="image/png" href="images/thumb.png">
 
   <!-- font for play/pause button -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
-<body class="tuneup-page">
+<body class="tuneup-page has-corner-donate">
   <header>
-    <img src="images/cooltext494848403796185.png" alt="SUBBASSES Logo" class="header-logo">
+    <div class="header-utilities">
+      <div id="donate" aria-label="Support My Work">
+        <div class="center-donate-btn">
+          <form action="https://www.paypal.biz/okmaso" method="post" target="_blank">
+            <input type="hidden" name="hosted_button_id" value="YOUR_PAYPAL_BUTTON_ID">
+            <button type="submit" class="wave-btn cash-btn paypal-btn" aria-label="Donate with PayPal">
+              <i class="fa-brands fa-paypal"></i>
+            </button>
+          </form>
+          <a href="https://cash.app/$duhmaso" target="_blank" class="wave-btn cash-btn" aria-label="Donate with Cash App">
+            <i class="fa-brands fa-cc-visa"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="social-links">
+        <a href="https://instagram.com/duhmaso" target="_blank" aria-label="Instagram">
+          <i class="fa-brands fa-instagram"></i>
+        </a>
+        <a href="https://x.com/duhmaso" target="_blank" aria-label="Twitter/X">
+          <i class="fa-brands fa-x-twitter"></i>
+        </a>
+        <a href="https://soundcloud.com/duhmaso" target="_blank" aria-label="SoundCloud">
+          <i class="fa-brands fa-soundcloud"></i>
+        </a>
+        <a href="https://open.spotify.com/artist/2NKX1Fu1FURAUsjKDGtycs?si=Zx05H2cjRtKi8cL98LDOzA" target="_blank" aria-label="Spotify">
+          <i class="fa-brands fa-spotify"></i>
+        </a>
+      </div>
+    </div>
+
+    <a href="index.html" aria-label="Home">
+      <img src="images/cooltext494848403796185.png" alt="SUBBASSES Logo" class="header-logo">
+    </a>
     <nav>
-      <a href="index.html">Beats</a>
-      <a href="melodies.html">Melodies</a>
       <a href="contract.html">Licensing</a>
       <a href="contact.html">Contact</a>
     </nav>
-    <div class="social-links">
+  </header>
+
+  <!--Swag Section -->
+  
+    <p><em>immerse yourself into the subbass</em></p>
+ 
+
+  <!-- Music Sections with WaveSurfer Playlists -->
+  <section id="music-sections" class="music-grid">
+    <section id="music-beats" class="music-panel">
+      <h2>Beats</h2>
+
+      <p id="trackNameBeats" class="track-name">No track loaded</p>
+      <figure id="waveform-beats" class="waveform"></figure>
+
+      <section class="controls">
+        <button id="prevBtnBeats" class="wave-btn" aria-label="Previous beat">
+          <i class="fa fa-backward"></i>
+        </button>
+        <button id="playBtnBeats" class="wave-btn" aria-label="Play or pause beats">
+          <i class="fa fa-play"></i>
+        </button>
+        <button id="nextBtnBeats" class="wave-btn" aria-label="Next beat">
+          <i class="fa fa-forward"></i>
+        </button>
+        <a id="downloadBtnBeats" class="wave-btn" href="#" download aria-label="Download beat">
+          <i class="fa fa-download"></i>
+        </a>
+      </section>
+
+      <div class="playback-tools" aria-label="Beats playback options">
+        <label for="speedBeats">Speed</label>
+        <input id="speedBeats" class="speed-slider" type="range" min="0.5" max="2" step="0.05" value="1" aria-label="Beats playback speed">
+        <span id="speedBeatsValue" class="speed-value">1.00x</span>
+
+        <label class="toggle-row" for="stretchBeats">
+          <input id="stretchBeats" type="checkbox" checked>
+          Time stretch
+        </label>
+      </div>
+    </section>
+
+    <section id="music-melodies" class="music-panel">
+      <h2>Melodies</h2>
+
+      <p id="trackNameMelodies" class="track-name">No track loaded</p>
+      <figure id="waveform-melodies" class="waveform"></figure>
+
+      <section class="controls">
+        <button id="prevBtnMelodies" class="wave-btn" aria-label="Previous melody">
+          <i class="fa fa-backward"></i>
+        </button>
+        <button id="playBtnMelodies" class="wave-btn" aria-label="Play or pause melodies">
+          <i class="fa fa-play"></i>
+        </button>
+        <button id="nextBtnMelodies" class="wave-btn" aria-label="Next melody">
+          <i class="fa fa-forward"></i>
+        </button>
+        <a id="downloadBtnMelodies" class="wave-btn" href="#" download aria-label="Download melody">
+          <i class="fa fa-download"></i>
+        </a>
+      </section>
+
+      <div class="playback-tools" aria-label="Melodies playback options">
+        <label for="speedMelodies">Speed</label>
+        <input id="speedMelodies" class="speed-slider" type="range" min="0.5" max="2" step="0.05" value="1" aria-label="Melodies playback speed">
+        <span id="speedMelodiesValue" class="speed-value">1.00x</span>
+
+        <label class="toggle-row" for="stretchMelodies">
+          <input id="stretchMelodies" type="checkbox" checked>
+          Time stretch
+        </label>
+      </div>
+    </section>
+  </section>
+
+  <p class="legal-disclaimer music-grid-legal">
+    ⚠️ By downloading, you agree to our <a href="contract.html#licensing">Licensing</a>.
+    Non‑commercial use under <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY‑NC 4.0</a>;
+    commercial use requires a <a href="contract/Artist Producer Agr (Advance + royalty + pub).pdf" target="_blank">license</a>.
+  </p>
+
+  <section id="merch-section" class="feature-section">
+    <h2>Shop / Merch</h2>
+    <p>Coming soon.</p>
+  </section>
+
+  <section class="mobile-utilities" aria-label="Mobile support and social links">
+    <div class="center-donate-btn" aria-label="Support My Work">
+      <form action="https://www.paypal.biz/okmaso" method="post" target="_blank">
+        <input type="hidden" name="hosted_button_id" value="YOUR_PAYPAL_BUTTON_ID">
+        <button type="submit" class="wave-btn cash-btn paypal-btn" aria-label="Donate with PayPal">
+          <i class="fa-brands fa-paypal"></i>
+        </button>
+      </form>
+      <a href="https://cash.app/$duhmaso" target="_blank" class="wave-btn cash-btn" aria-label="Donate with Cash App">
+        <i class="fa-brands fa-cc-visa"></i>
+      </a>
+    </div>
+
+    <div class="social-links" aria-label="Social links">
       <a href="https://instagram.com/duhmaso" target="_blank" aria-label="Instagram">
         <i class="fa-brands fa-instagram"></i>
       </a>
@@ -34,73 +175,6 @@
         <i class="fa-brands fa-spotify"></i>
       </a>
     </div>
-  </header>
-
-  <!--Swag Section -->
-  <section id="swag">
-    <p><em>immerse yourself into the subbass</em></p>
-    <img src="images/subbasses1.png" alt="Subbasses Image" class="swag-image">
-  </section>
-
-  <!-- Music Section with WaveSurfer Playlist -->
-  <section id="music">
-    <p>Browse through some sounds</p>
-
-    <!-- Track Name -->
-    <p id="trackName">No track loaded</p>
-
-    <!-- Waveform container -->
-    <figure id="waveform"></figure>
-
-    
-    <section class="controls">
-      <!-- Previous Track -->
-      <button id="prevBtn" class="wave-btn">
-        <i class="fa fa-backward"></i>
-      </button>
-
-      <!-- Play/Pause button -->
-      <button id="playBtn" class="wave-btn">
-        <i class="fa fa-play"></i>
-      </button>
-
-      <!-- Next Track -->
-      <button id="nextBtn" class="wave-btn">
-        <i class="fa fa-forward"></i>
-      </button>
-
-      <!-- Download button -->
-      <a id="downloadBtn" class="wave-btn" href="#" download>
-        <i class="fa fa-download"></i>
-      
-      </a>
-      <p class="legal-disclaimer">
-        ⚠️ By downloading, you agree to our <a href="contract.html#licensing">Licensing</a>.
-        Non‑commercial use under <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY‑NC 4.0</a>;
-        commercial use requires a <a href="contract/Artist Producer Agr (Advance + royalty + pub).pdf" target="_blank">license</a>.
-      </p>
-    </section>
-  </section>
-
-  <!-- Donate Section -->
-  <section id="donate">
-    <h2>Support My Work</h2>
-    <p>If you enjoy my work, consider making a donation:</p>
-
-    <!-- PayPal -->
-
-    <section class="center-donate-btn">
-      <form action="https://www.paypal.biz/okmaso" method="post" target="_blank">
-        <input type="hidden" name="hosted_button_id" value="YOUR_PAYPAL_BUTTON_ID">
-        <button type="submit" class="wave-btn cash-btn paypal-btn">
-          <i class="fa-brands fa-paypal"></i>
-        </button>
-      </form>
-      <a href="https://cash.app/$duhmaso" target="_blank" class="wave-btn cash-btn">
-        <i class="fa-brands fa-cc-visa"></i>
-      </a>
-    </section>
-    
   </section>
 
   <footer>
@@ -108,7 +182,7 @@
       <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">Creative Commons Attribution‑NonCommercial 4.0 License (CC BY‑NC 4.0)</a>.
       Commercial use requires a <a href="contract/Artist Producer Agr (Advance + royalty + pub).pdf" target="_blank">license</a>.
     </p>
-    <p>&copy; 2025 SUBBASSES.</p>
+    <p>&copy; 2026 SUBBASSES. $2300</p>
   </footer>
 
   <!-- WaveSurfer.js library -->
@@ -117,8 +191,7 @@
   <!-- Initialize WaveSurfer Playlist -->
   <script>
     window.onload = function() {
-      const tracks = [
-        // Beats
+      const beatsTracks = [
         "music/adjust 145.mp3",
         "music/area 140.mp3",
         "music/arturia 140.mp3",
@@ -134,62 +207,214 @@
         "music/type 145.mp3",
         "music/wisp unf 148.mp3"
       ];
-      let currentTrack = 0;
 
-      const wavesurfer = WaveSurfer.create({
-        container: '#waveform',
-        waveColor: '#7d8cff',
-        progressColor: '#232a63',
-        height: 100
-      });
+      const melodyTracks = [
+        "music/melodies/cntr 152.wav",
+        "music/melodies/core 120.mp3",
+        "music/melodies/emate 140.wav",
+        "music/melodies/hendon 140.wav",
+        "music/melodies/inner core 120.wav",
+        "music/melodies/often.wav",
+        "music/melodies/outer 120.wav",
+        "music/melodies/rain 136.mp3",
+        "music/melodies/serum 2night 134.wav",
+        "music/melodies/sire 140 d major.wav",
+        "music/melodies/wired 160.mp3"
+      ];
 
-      // Buttons
-      const playBtn = document.getElementById('playBtn');
-      const nextBtn = document.getElementById('nextBtn');
-      const prevBtn = document.getElementById('prevBtn');
-      const downloadBtn = document.getElementById('downloadBtn');
-      const trackNameDiv = document.getElementById('trackName');
+      function setupPlayer(config) {
+        const {
+          tracks,
+          container,
+          waveColor,
+          progressColor,
+          waveformHeight,
+          playBtnId,
+          nextBtnId,
+          prevBtnId,
+          downloadBtnId,
+          trackNameId,
+          speedSelectId,
+          speedLabelId,
+          stretchToggleId,
+          settingsKey
+        } = config;
 
-      // Load track and update UI
-      function loadTrack(filePath) {
-        wavesurfer.load(filePath);
+        let currentTrack = 0;
 
-        // Extract file name
-        let fileName = filePath.split('/').pop().replace('.mp3', '');
-        trackNameDiv.textContent = fileName;
+        const wavesurfer = WaveSurfer.create({
+          container,
+          waveColor,
+          progressColor,
+          height: waveformHeight || 68
+        });
 
-        // Update download link
-        downloadBtn.href = filePath;
+        const playBtn = document.getElementById(playBtnId);
+        const nextBtn = document.getElementById(nextBtnId);
+        const prevBtn = document.getElementById(prevBtnId);
+        const downloadBtn = document.getElementById(downloadBtnId);
+        const trackNameDiv = document.getElementById(trackNameId);
+        const speedControl = document.getElementById(speedSelectId);
+        const speedLabel = document.getElementById(speedLabelId);
+        const stretchToggle = document.getElementById(stretchToggleId);
 
-        // Reset play button icon
-        const icon = playBtn.querySelector('i');
-        icon.classList.replace('fa-pause', 'fa-play');
+        function renderSpeedValue() {
+          speedLabel.textContent = Number(speedControl.value).toFixed(2) + 'x';
+        }
+
+        function restorePlaybackOptions() {
+          try {
+            const savedSpeed = localStorage.getItem(settingsKey + ':speed');
+            const savedStretch = localStorage.getItem(settingsKey + ':stretch');
+
+            if (savedSpeed) {
+              const parsed = Number(savedSpeed);
+              if (Number.isFinite(parsed) && parsed >= 0.5 && parsed <= 2) {
+                speedControl.value = String(parsed);
+              }
+            }
+
+            if (savedStretch === 'true' || savedStretch === 'false') {
+              stretchToggle.checked = savedStretch === 'true';
+            }
+          } catch (err) {
+            // Ignore storage issues and use defaults
+          }
+        }
+
+        function persistPlaybackOptions() {
+          try {
+            localStorage.setItem(settingsKey + ':speed', speedControl.value);
+            localStorage.setItem(settingsKey + ':stretch', String(stretchToggle.checked));
+          } catch (err) {
+            // Ignore storage issues
+          }
+        }
+
+        function setPlayIcon(isPlaying) {
+          const icon = playBtn.querySelector('i');
+          if (isPlaying) {
+            icon.classList.replace('fa-play', 'fa-pause');
+          } else {
+            icon.classList.replace('fa-pause', 'fa-play');
+          }
+        }
+
+        function loadTrack(filePath) {
+          wavesurfer.load(filePath);
+          const fileName = filePath.split('/').pop().replace(/\.(mp3|wav)$/i, '');
+          trackNameDiv.textContent = fileName;
+          downloadBtn.href = filePath;
+          setPlayIcon(false);
+          applyPlaybackOptions();
+        }
+
+        function applyPlaybackOptions() {
+          const speed = Number(speedControl.value);
+          const preservePitch = stretchToggle.checked;
+
+          renderSpeedValue();
+
+          // preservePitch=true keeps pitch stable while speed changes (time-stretch feel)
+          try {
+            wavesurfer.setPlaybackRate(speed, preservePitch);
+          } catch (err) {
+            wavesurfer.setPlaybackRate(speed);
+          }
+
+          persistPlaybackOptions();
+        }
+
+        restorePlaybackOptions();
+
+        if (tracks.length > 0) {
+          loadTrack(tracks[currentTrack]);
+        } else {
+          trackNameDiv.textContent = 'No tracks yet';
+          downloadBtn.removeAttribute('href');
+          [playBtn, nextBtn, prevBtn].forEach(btn => {
+            btn.disabled = true;
+          });
+        }
+
+        playBtn.addEventListener('click', () => {
+          wavesurfer.playPause();
+          setPlayIcon(wavesurfer.isPlaying());
+        });
+
+        speedControl.addEventListener('input', applyPlaybackOptions);
+        speedControl.addEventListener('change', applyPlaybackOptions);
+        stretchToggle.addEventListener('change', applyPlaybackOptions);
+
+        nextBtn.addEventListener('click', () => {
+          currentTrack = (currentTrack + 1) % tracks.length;
+          loadTrack(tracks[currentTrack]);
+        });
+
+        prevBtn.addEventListener('click', () => {
+          currentTrack = (currentTrack - 1 + tracks.length) % tracks.length;
+          loadTrack(tracks[currentTrack]);
+        });
+
+        wavesurfer.on('finish', () => {
+          setPlayIcon(false);
+        });
+
+        wavesurfer.on('ready', () => {
+          applyPlaybackOptions();
+        });
+
+        applyPlaybackOptions();
+
+        return wavesurfer;
       }
 
-      // Load first track
-      loadTrack(tracks[currentTrack]);
+      const beatsPlayer = setupPlayer({
+        tracks: beatsTracks,
+        container: '#waveform-beats',
+        waveColor: '#7d8cff',
+        progressColor: '#232a63',
+        waveformHeight: 68,
+        playBtnId: 'playBtnBeats',
+        nextBtnId: 'nextBtnBeats',
+        prevBtnId: 'prevBtnBeats',
+        downloadBtnId: 'downloadBtnBeats',
+        trackNameId: 'trackNameBeats',
+        speedSelectId: 'speedBeats',
+        speedLabelId: 'speedBeatsValue',
+        stretchToggleId: 'stretchBeats',
+        settingsKey: 'beatsPlayerSettings'
+      });
 
-      // Play/Pause button
-      playBtn.addEventListener('click', () => {
-        wavesurfer.playPause();
-        const icon = playBtn.querySelector('i');
-        if (wavesurfer.isPlaying()) {
-          icon.classList.replace('fa-play', 'fa-pause');
-        } else {
-          icon.classList.replace('fa-pause', 'fa-play');
+      const melodiesPlayer = setupPlayer({
+        tracks: melodyTracks,
+        container: '#waveform-melodies',
+        waveColor: '#59b884',
+        progressColor: '#1f5c3f',
+        waveformHeight: 68,
+        playBtnId: 'playBtnMelodies',
+        nextBtnId: 'nextBtnMelodies',
+        prevBtnId: 'prevBtnMelodies',
+        downloadBtnId: 'downloadBtnMelodies',
+        trackNameId: 'trackNameMelodies',
+        speedSelectId: 'speedMelodies',
+        speedLabelId: 'speedMelodiesValue',
+        stretchToggleId: 'stretchMelodies',
+        settingsKey: 'melodiesPlayerSettings'
+      });
+
+      beatsPlayer.on('play', () => {
+        if (melodiesPlayer.isPlaying()) {
+          melodiesPlayer.pause();
+          document.querySelector('#playBtnMelodies i').classList.replace('fa-pause', 'fa-play');
         }
       });
 
-      // Next Track button
-      nextBtn.addEventListener('click', () => {
-        currentTrack = (currentTrack + 1) % tracks.length;
-        loadTrack(tracks[currentTrack]);
-      });
-
-      // Previous Track button
-      prevBtn.addEventListener('click', () => {
-        currentTrack = (currentTrack - 1 + tracks.length) % tracks.length;
-        loadTrack(tracks[currentTrack]);
+      melodiesPlayer.on('play', () => {
+        if (beatsPlayer.isPlaying()) {
+          beatsPlayer.pause();
+          document.querySelector('#playBtnBeats i').classList.replace('fa-pause', 'fa-play');
+        }
       });
     };
   </script>

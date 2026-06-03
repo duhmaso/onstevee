@@ -103,7 +103,7 @@ button, a.wave-btn { text-decoration: none; border: none; }
 /* ---------------- Contract page readability and framing ---------------- */
 /* Apply page frame similar to index.html for pages using this stylesheet (e.g., contract.html) */
 body {
-  border: 2px solid grey;
+  border: 3px solid grey;
   border-radius: 15px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   max-width: 900px;

@@ -1,0 +1,110 @@
+/* Minimal premium preview styles for test-minimal.html only */
+
+body.test-minimal-page {
+  max-width: 920px;
+  padding: 18px;
+  border: 3px solid rgba(12, 16, 24, 0.14);
+  border-radius: 20px;
+  box-shadow: 0 14px 34px rgba(9, 12, 20, 0.16);
+  background-image:
+    radial-gradient(circle at 20% 0%, rgba(255, 255, 255, 0.92), rgba(244, 246, 250, 0.86) 45%, rgba(238, 241, 246, 0.82) 100%),
+    url('images/speaker-high-volume_padded_3000x3000.png');
+  background-size: cover;
+  background-position: center;
+  text-shadow: none;
+  color: #161a24;
+}
+
+body.test-minimal-page .test-label {
+  margin: 8px auto 4px;
+  display: inline-block;
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(12, 16, 24, 0.14);
+  background: rgba(255, 255, 255, 0.78);
+  font-size: 11px;
+  letter-spacing: 1px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+body.test-minimal-page header,
+body.test-minimal-page #swag,
+body.test-minimal-page #music,
+body.test-minimal-page #donate,
+body.test-minimal-page footer {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(12, 16, 24, 0.1);
+  border-radius: 14px;
+}
+
+body.test-minimal-page header {
+  padding: 8px 8px 4px;
+}
+
+body.test-minimal-page #swag,
+body.test-minimal-page #music,
+body.test-minimal-page #donate,
+body.test-minimal-page footer {
+  margin-top: 12px;
+  padding: 12px;
+}
+
+body.test-minimal-page nav a,
+body.test-minimal-page .social-links a,
+body.test-minimal-page #trackName {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(12, 16, 24, 0.1);
+}
+
+body.test-minimal-page nav a:hover,
+body.test-minimal-page .social-links a:hover {
+  background: #ffffff;
+  box-shadow: 0 5px 14px rgba(11, 16, 28, 0.14);
+}
+
+body.test-minimal-page .swag-image {
+  width: min(100%, 500px);
+  filter: saturate(0.92) contrast(1.02);
+}
+
+body.test-minimal-page #waveform {
+  max-width: 700px;
+  margin: 12px auto;
+  padding: 8px;
+  border-radius: 12px;
+  border: 1px solid rgba(12, 16, 24, 0.12);
+  background: rgba(255, 255, 255, 0.92);
+}
+
+body.test-minimal-page .wave-btn {
+  border: 1px solid rgba(12, 16, 24, 0.15);
+  box-shadow: 0 5px 12px rgba(12, 16, 24, 0.12);
+}
+
+body.test-minimal-page .wave-btn:hover {
+  transform: translateY(-1px);
+}
+
+body.test-minimal-page .legal-disclaimer {
+  color: #1b2232;
+}
+
+body.test-minimal-page .legal-disclaimer a {
+  color: #15294f;
+}
+
+@media (max-width: 768px) {
+  body.test-minimal-page {
+    padding: 10px;
+    border-radius: 12px;
+  }
+
+  body.test-minimal-page #swag,
+  body.test-minimal-page #music,
+  body.test-minimal-page #donate,
+  body.test-minimal-page footer {
+    padding: 10px;
+    border-radius: 10px;
+  }
+}

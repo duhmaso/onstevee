@@ -1,16 +1,45 @@
 /* Shared tune-up styles for production pages */
 
+html {
+  background: #f3f3f3;
+}
+
+html::before,
+html::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: max(0px, calc((100vw - 980px) / 2));
+  background-image: url('../images/thumb.png');
+  background-repeat: repeat-y;
+  background-size: 100% auto;
+  pointer-events: none;
+  z-index: 3;
+}
+
+html::before {
+  left: 0;
+}
+
+html::after {
+  right: 0;
+  transform: scaleX(-1);
+  transform-origin: center;
+}
+
+body.tuneup-page {
+  z-index: 1;
+}
+
 body.tuneup-page {
   max-width: 980px;
   padding: 16px;
-  border: 1px solid rgba(0, 0, 0, 0.18);
+  position: relative;
+  border: 3px solid rgba(0, 0, 0, 0.18);
   border-radius: 22px;
   box-shadow: 0 22px 40px rgba(0, 0, 0, 0.18), inset 0 0 0 1px rgba(255, 255, 255, 0.35);
-  background-image:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(255, 255, 255, 0.8)),
-    url('../images/speaker-high-volume_3000x3000.png');
-  background-size: cover;
-  background-position: center;
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.86));
   text-shadow: none;
 }
 
@@ -29,7 +58,9 @@ body.tuneup-page #trackName {
 
 body.tuneup-page #swag,
 body.tuneup-page #music,
-body.tuneup-page #donate,
+body.tuneup-page #music-sections,
+body.tuneup-page #merch-section,
+body.tuneup-page #embedded-links,
 body.tuneup-page footer,
 body.tuneup-page .legal-content,
 body.tuneup-page #contact-section {
@@ -54,6 +85,205 @@ body.tuneup-page #waveform {
   border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
+body.tuneup-page .music-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  align-items: start;
+}
+
+body.tuneup-page .music-panel {
+  padding: 10px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+body.tuneup-page .music-panel h2 {
+  margin: 0 0 6px;
+  padding: 0;
+  font-size: 18px;
+}
+
+body.tuneup-page .track-name {
+  font-weight: 600;
+  margin: 6px 0 10px;
+  color: #000000f8;
+  font-size: 14px;
+  letter-spacing: 0.3px;
+  padding: 5px 10px;
+  display: inline-block;
+  background: rgba(123, 44, 255, 0.12);
+  border-radius: 999px;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+body.tuneup-page .waveform {
+  margin: 10px auto;
+  width: 100%;
+  height: 80px;
+  border-radius: 12px;
+  padding: 6px;
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+body.tuneup-page #waveform-beats {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+body.tuneup-page #waveform-beats > div {
+  position: absolute !important;
+  top: 6px;
+  right: 6px;
+  bottom: 6px;
+  left: 6px;
+  width: auto !important;
+  height: auto !important;
+  margin: 0 !important;
+}
+
+body.tuneup-page #waveform-beats > div canvas,
+body.tuneup-page #waveform-beats > div wave {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+body.tuneup-page .music-panel .controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+body.tuneup-page .music-panel .wave-btn {
+  width: 46px;
+  height: 46px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.16);
+  background: rgba(255, 255, 255, 0.95);
+  color: #17223a;
+  text-decoration: none;
+  line-height: 1;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+body.tuneup-page .music-panel .wave-btn:hover {
+  background: rgba(255, 255, 255, 1);
+}
+
+body.tuneup-page .playback-tools {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 12px;
+}
+
+body.tuneup-page .speed-slider {
+  width: 140px;
+  accent-color: #2b62e8;
+}
+
+body.tuneup-page .speed-value {
+  min-width: 52px;
+  text-align: center;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+body.tuneup-page .toggle-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.8);
+}
+
+body.tuneup-page .toggle-row input {
+  margin: 0;
+}
+
+body.tuneup-page .music-grid-legal {
+  margin-top: 10px;
+}
+
+body.tuneup-page .feature-section h2 {
+  margin: 0 0 8px;
+}
+
+body.tuneup-page #embedded-links h2 {
+  font-family: inherit;
+  color: #1e2a44;
+  letter-spacing: 0.2px;
+  text-transform: none;
+}
+
+body.tuneup-page .embed-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+body.tuneup-page .embed-card {
+  padding: 10px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+body.tuneup-page .embed-card h3 {
+  margin: 0 0 8px;
+  font-size: 16px;
+}
+
+body.tuneup-page .embed-frame {
+  width: 100%;
+  border: 0;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #fff;
+}
+
+body.tuneup-page .embed-frame-youtube {
+  aspect-ratio: 16 / 9;
+  min-height: 200px;
+}
+
+body.tuneup-page .embed-caption {
+  margin: 8px 0 0;
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+body.tuneup-page .embed-placeholder {
+  min-height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  border: 1px dashed rgba(0, 0, 0, 0.25);
+  background: rgba(255, 255, 255, 0.55);
+  font-weight: 600;
+}
+
 body.tuneup-page .wave-btn {
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
 }
@@ -62,8 +292,55 @@ body.tuneup-page .wave-btn:hover {
   transform: translateY(-2px) scale(1.04);
 }
 
+/* Compact corner donate panel for index page */
+body.tuneup-page.has-corner-donate .header-utilities {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+
+body.tuneup-page.has-corner-donate #donate {
+  position: static;
+  margin: 0;
+  padding: 0;
+}
+
+body.tuneup-page.has-corner-donate .social-links {
+  position: static;
+  top: auto;
+  right: auto;
+  margin: 0;
+}
+
+body.tuneup-page.has-corner-donate #donate .center-donate-btn {
+  gap: 6px;
+  margin: 0;
+}
+
+body.tuneup-page.has-corner-donate #donate .cash-btn {
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
+  min-height: 34px;
+  font-size: 13px;
+}
+
+body.tuneup-page .mobile-utilities {
+  display: none;
+}
+
 @media (max-width: 768px) {
+  html::before,
+  html::after {
+    width: 14px;
+  }
+
   body.tuneup-page {
+    max-width: calc(100vw - 28px);
+    margin-left: auto;
+    margin-right: auto;
     padding: 10px;
     border-radius: 14px;
     box-shadow: 0 10px 22px rgba(0, 0, 0, 0.15);
@@ -71,7 +348,9 @@ body.tuneup-page .wave-btn:hover {
 
   body.tuneup-page #swag,
   body.tuneup-page #music,
-  body.tuneup-page #donate,
+  body.tuneup-page #music-sections,
+  body.tuneup-page #merch-section,
+  body.tuneup-page #embedded-links,
   body.tuneup-page footer,
   body.tuneup-page .legal-content,
   body.tuneup-page #contact-section {
@@ -83,6 +362,25 @@ body.tuneup-page .wave-btn:hover {
     max-width: 100%;
     margin: 10px auto;
     padding: 6px;
+  }
+
+  body.tuneup-page .waveform {
+    height: 86px;
+    padding: 5px;
+  }
+
+  body.tuneup-page .music-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  body.tuneup-page .embed-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  body.tuneup-page .music-panel {
+    padding: 8px;
   }
 
   body.tuneup-page .controls {
@@ -103,12 +401,70 @@ body.tuneup-page .wave-btn:hover {
     margin-top: 10px;
     line-height: 1.45;
   }
+
+  body.tuneup-page.has-corner-donate #donate {
+    padding: 0;
+  }
+
+  body.tuneup-page.has-corner-donate .header-utilities {
+    gap: 8px;
+  }
+
+  body.tuneup-page.has-corner-donate #donate .cash-btn {
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
+    min-height: 30px;
+    font-size: 12px;
+  }
+
+  body.tuneup-page.has-corner-donate .header-utilities {
+    display: none;
+  }
+
+  body.tuneup-page .mobile-utilities {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.58);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  body.tuneup-page .mobile-utilities .social-links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  body.tuneup-page .mobile-utilities .center-donate-btn {
+    gap: 10px;
+    margin: 0;
+  }
+
+  body.tuneup-page .mobile-utilities .cash-btn {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    min-height: 36px;
+    font-size: 14px;
+  }
 }
 
 @media (max-width: 420px) {
+  html::before,
+  html::after {
+    width: 10px;
+  }
+
   body.tuneup-page {
+    max-width: calc(100vw - 20px);
     padding: 7px;
-    border-width: 1px;
+    border-width: 2px;
     border-radius: 10px;
   }
 
@@ -119,7 +475,9 @@ body.tuneup-page .wave-btn:hover {
 
   body.tuneup-page #swag,
   body.tuneup-page #music,
-  body.tuneup-page #donate,
+  body.tuneup-page #music-sections,
+  body.tuneup-page #merch-section,
+  body.tuneup-page #embedded-links,
   body.tuneup-page footer,
   body.tuneup-page .legal-content,
   body.tuneup-page #contact-section {
@@ -135,6 +493,26 @@ body.tuneup-page .wave-btn:hover {
   body.tuneup-page nav a {
     padding: 4px 8px;
     font-size: 11px;
+  }
+
+  body.tuneup-page .music-panel .wave-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 13px;
+    border-radius: 9px;
+  }
+
+  body.tuneup-page .playback-tools {
+    gap: 6px;
+    font-size: 11px;
+  }
+
+  body.tuneup-page .speed-slider {
+    width: 120px;
+  }
+
+  body.tuneup-page .speed-value {
+    min-width: 48px;
   }
 
   body.tuneup-page #trackName {
