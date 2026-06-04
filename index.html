@@ -62,7 +62,7 @@
       <p id="trackNameBeats" class="track-name">No track loaded</p>
       <figure id="waveform-beats" class="waveform"></figure>
       <canvas id="spectrumBeats" class="spectrum-visualizer" width="520" height="64" aria-label="Beats frequency visualizer"></canvas>
-
+      
       <section class="controls">
         <button id="prevBtnBeats" class="wave-btn" aria-label="Previous beat">
           <i class="fa fa-backward"></i>
@@ -100,6 +100,7 @@
       <p id="trackNameMelodies" class="track-name">No track loaded</p>
       <figure id="waveform-melodies" class="waveform"></figure>
       <canvas id="spectrumMelodies" class="spectrum-visualizer" width="520" height="64" aria-label="Melodies frequency visualizer"></canvas>
+      
 
       <section class="controls">
         <button id="prevBtnMelodies" class="wave-btn" aria-label="Previous melody">
@@ -257,6 +258,7 @@
           statusId,
           spectrumCanvasId,
           spectrumColor,
+          spectrumPalette,
           speedSelectId,
           speedLabelId,
           stretchToggleId,
@@ -284,6 +286,7 @@
         const trackSelect = document.getElementById(trackSelectId);
         const statusEl = document.getElementById(statusId);
         const spectrumCanvas = document.getElementById(spectrumCanvasId);
+        const musicPanel = spectrumCanvas.closest('.music-panel');
         const spectrumCtx = spectrumCanvas.getContext('2d');
         const speedControl = document.getElementById(speedSelectId);
         const speedLabel = document.getElementById(speedLabelId);
@@ -291,11 +294,27 @@
         const isMobileDevice = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent || '');
         const preloadedTracks = new Set();
         const spectrumBars = 26;
-        let spectrumAudioCtx = null;
-        let spectrumAnalyser = null;
-        let spectrumData = null;
-        let spectrumSourceNode = null;
+        const spectrumMinHz = 20;
+        const spectrumMaxHz = 12000;
+        let spectrumEnvelopeBands = null;
+        let spectrumLiveAnalyser = null;
+        let spectrumLiveAudioCtx = null;
+        let spectrumLiveData = null;
+
+        const spectrumSmoothedBars = new Array(spectrumBars).fill(0);
+        const spectrumPeakCaps = new Array(spectrumBars).fill(0);
+        const spectrumBarVoicing = Array.from({ length: spectrumBars }, (_, i) => {
+          return 0.86 + ((Math.sin(i * 1.73) * 0.5 + 0.5) * 0.28);
+        });
+        const resolvedSpectrumPalette = spectrumPalette || {
+          low: [53, 231, 255],
+          lowMid: [90, 240, 255],
+          highMid: [125, 245, 235],
+          highs: [198, 227, 255]
+        };
         let spectrumAnimationFrame = null;
+        let lastSpectrumDrawAt = 0;
+        const spectrumFrameIntervalMs = 33;
         let speedInputFrame = null;
 
         function setStatus(state, label) {
@@ -304,11 +323,12 @@
         }
 
         function drawIdleSpectrum() {
-          const w = spectrumCanvas.width;
-          const h = spectrumCanvas.height;
+          const w = spectrumCanvas.clientWidth || 520;
+          const h = 64;
           const barWidth = w / spectrumBars;
 
           spectrumCtx.clearRect(0, 0, w, h);
+          drawSpectrumGuides(w, h);
 
           for (let i = 0; i < spectrumBars; i += 1) {
             const x = i * barWidth + 1;
@@ -316,9 +336,57 @@
             const barHeight = Math.max(4, h * base);
             const y = h - barHeight;
 
-            spectrumCtx.fillStyle = 'rgba(53, 231, 255, 0.2)';
+            const freq = barToFrequency(i);
+            const band = getBandInfo(freq);
+            const c = resolvedSpectrumPalette[band.key];
+
+            spectrumCtx.fillStyle = `rgba(${c[0]}, ${c[1]}, ${c[2]}, 0.18)`;
             spectrumCtx.fillRect(x, y, Math.max(2, barWidth - 2), barHeight);
           }
+        }
+
+        function barToFrequency(index) {
+          const t = index / Math.max(1, spectrumBars - 1);
+          return spectrumMinHz * Math.pow(spectrumMaxHz / spectrumMinHz, t);
+        }
+
+        function getBandInfo(freq) {
+          if (freq < 140) {
+            return { key: 'low', gate: 0.11, gain: 1.25 };
+          }
+          if (freq < 600) {
+            return { key: 'lowMid', gate: 0.13, gain: 1.1 };
+          }
+          if (freq < 2500) {
+            return { key: 'highMid', gate: 0.16, gain: 1.0 };
+          }
+          return { key: 'highs', gate: 0.19, gain: 0.92 };
+        }
+
+        function drawSpectrumGuides(w, h) {
+          spectrumCtx.save();
+          spectrumCtx.strokeStyle = 'rgba(145, 206, 255, 0.14)';
+          spectrumCtx.lineWidth = 1;
+
+          const rows = 4;
+          for (let r = 1; r <= rows; r += 1) {
+            const y = Math.floor((h / (rows + 1)) * r) + 0.5;
+            spectrumCtx.beginPath();
+            spectrumCtx.moveTo(0, y);
+            spectrumCtx.lineTo(w, y);
+            spectrumCtx.stroke();
+          }
+
+          spectrumCtx.strokeStyle = 'rgba(145, 206, 255, 0.18)';
+          for (let c = 1; c < 4; c += 1) {
+            const x = Math.floor((w / 4) * c) + 0.5;
+            spectrumCtx.beginPath();
+            spectrumCtx.moveTo(x, 0);
+            spectrumCtx.lineTo(x, h);
+            spectrumCtx.stroke();
+          }
+
+          spectrumCtx.restore();
         }
 
         function resizeSpectrumCanvas() {
@@ -332,72 +400,252 @@
           drawIdleSpectrum();
         }
 
-        function ensureSpectrumAnalyser() {
-          if (spectrumAnalyser) {
+        function ensureLiveSpectrumAnalyser() {
+          if (spectrumLiveAnalyser) {
             return true;
           }
 
-          const mediaElement = wavesurfer.getMediaElement
-            ? wavesurfer.getMediaElement()
-            : null;
+          const backend = wavesurfer.backend || wavesurfer._backend || null;
+          if (!backend) {
+            return false;
+          }
 
-          if (!mediaElement) {
+          if (backend.analyser && typeof backend.analyser.getByteFrequencyData === 'function') {
+            spectrumLiveAnalyser = backend.analyser;
+            spectrumLiveAudioCtx = backend.ac || backend.audioContext || spectrumLiveAnalyser.context || null;
+            spectrumLiveData = new Uint8Array(spectrumLiveAnalyser.frequencyBinCount);
+            return true;
+          }
+
+          const backendCtx = backend.ac || backend.audioContext || null;
+          const sourceNode = backend.source || backend.media || backend.mediaNode || null;
+          if (!backendCtx || !sourceNode || typeof backendCtx.createAnalyser !== 'function') {
             return false;
           }
 
           try {
-            spectrumAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            spectrumAnalyser = spectrumAudioCtx.createAnalyser();
-            spectrumAnalyser.fftSize = 256;
-            spectrumAnalyser.smoothingTimeConstant = 0.82;
-            spectrumData = new Uint8Array(spectrumAnalyser.frequencyBinCount);
-            spectrumSourceNode = spectrumAudioCtx.createMediaElementSource(mediaElement);
-
-            spectrumSourceNode.connect(spectrumAnalyser);
-            spectrumAnalyser.connect(spectrumAudioCtx.destination);
-
+            const analyser = backendCtx.createAnalyser();
+            analyser.fftSize = 1024;
+            analyser.smoothingTimeConstant = 0.82;
+            sourceNode.connect(analyser);
+            spectrumLiveAnalyser = analyser;
+            spectrumLiveAudioCtx = backendCtx;
+            spectrumLiveData = new Uint8Array(analyser.frequencyBinCount);
             return true;
           } catch (err) {
+            spectrumLiveAnalyser = null;
+            spectrumLiveAudioCtx = null;
+            spectrumLiveData = null;
             return false;
           }
         }
 
-        function renderSpectrumFrame() {
-          if (!spectrumAnalyser) {
+        function buildSpectrumEnvelope() {
+          const decodedData = wavesurfer.getDecodedData ? wavesurfer.getDecodedData() : null;
+          if (!decodedData) {
+            spectrumEnvelopeBands = null;
             return;
           }
 
-          spectrumAnalyser.getByteFrequencyData(spectrumData);
+          const channel = decodedData.getChannelData(0);
+          const sampleRate = decodedData.sampleRate || 44100;
+          const sampleCount = channel.length;
+          const envelopeBins = 1024;
+          const blockSize = Math.max(256, Math.floor(sampleCount / envelopeBins));
+          const lowEnvelope = new Array(envelopeBins).fill(0);
+          const lowMidEnvelope = new Array(envelopeBins).fill(0);
+          const highMidEnvelope = new Array(envelopeBins).fill(0);
+          const highsEnvelope = new Array(envelopeBins).fill(0);
+          let maxLow = 0.0001;
+          let maxLowMid = 0.0001;
+          let maxHighMid = 0.0001;
+          let maxHighs = 0.0001;
+
+          const lowAlpha = Math.min(0.5, (2 * Math.PI * 140) / sampleRate);
+          const lowMidAlpha = Math.min(0.5, (2 * Math.PI * 600) / sampleRate);
+          const highMidAlpha = Math.min(0.5, (2 * Math.PI * 2500) / sampleRate);
+          let lowState = 0;
+          let lowMidState = 0;
+          let highMidState = 0;
+
+          for (let i = 0; i < envelopeBins; i += 1) {
+            const start = i * blockSize;
+            const end = Math.min(sampleCount, start + blockSize);
+            if (start >= end) {
+              break;
+            }
+
+            let lowSumSquares = 0;
+            let lowMidSumSquares = 0;
+            let highMidSumSquares = 0;
+            let highsSumSquares = 0;
+
+            for (let j = start; j < end; j += 1) {
+              const sample = channel[j];
+
+              lowState += (sample - lowState) * lowAlpha;
+              lowMidState += (sample - lowMidState) * lowMidAlpha;
+              highMidState += (sample - highMidState) * highMidAlpha;
+
+              const lowBand = lowState;
+              const lowMidBand = lowMidState - lowState;
+              const highMidBand = highMidState - lowMidState;
+              const highsBand = sample - highMidState;
+
+              lowSumSquares += lowBand * lowBand;
+              lowMidSumSquares += lowMidBand * lowMidBand;
+              highMidSumSquares += highMidBand * highMidBand;
+              highsSumSquares += highsBand * highsBand;
+            }
+
+            const lowRms = Math.sqrt(lowSumSquares / (end - start));
+            const lowMidRms = Math.sqrt(lowMidSumSquares / (end - start));
+            const highMidRms = Math.sqrt(highMidSumSquares / (end - start));
+            const highsRms = Math.sqrt(highsSumSquares / (end - start));
+
+            lowEnvelope[i] = lowRms;
+            lowMidEnvelope[i] = lowMidRms;
+            highMidEnvelope[i] = highMidRms;
+            highsEnvelope[i] = highsRms;
+
+            if (lowRms > maxLow) {
+              maxLow = lowRms;
+            }
+            if (lowMidRms > maxLowMid) {
+              maxLowMid = lowMidRms;
+            }
+            if (highMidRms > maxHighMid) {
+              maxHighMid = highMidRms;
+            }
+            if (highsRms > maxHighs) {
+              maxHighs = highsRms;
+            }
+          }
+
+          spectrumEnvelopeBands = {
+            low: lowEnvelope.map((value) => Math.min(1, value / maxLow)),
+            lowMid: lowMidEnvelope.map((value) => Math.min(1, value / maxLowMid)),
+            highMid: highMidEnvelope.map((value) => Math.min(1, value / maxHighMid)),
+            highs: highsEnvelope.map((value) => Math.min(1, value / maxHighs))
+          };
+        }
+
+        function renderSpectrumFrame(now) {
+          if (typeof now === 'number' && now - lastSpectrumDrawAt < spectrumFrameIntervalMs) {
+            spectrumAnimationFrame = requestAnimationFrame(renderSpectrumFrame);
+            return;
+          }
+
+          lastSpectrumDrawAt = typeof now === 'number' ? now : performance.now();
 
           const w = spectrumCanvas.clientWidth || 520;
           const h = 64;
           const barWidth = w / spectrumBars;
 
           spectrumCtx.clearRect(0, 0, w, h);
+          drawSpectrumGuides(w, h);
+
+          if (spectrumLiveAnalyser && spectrumLiveData) {
+            spectrumLiveAnalyser.getByteFrequencyData(spectrumLiveData);
+
+            const sampleRate = spectrumLiveAudioCtx && spectrumLiveAudioCtx.sampleRate
+              ? spectrumLiveAudioCtx.sampleRate
+              : 44100;
+            const nyquist = sampleRate / 2;
+
+            for (let i = 0; i < spectrumBars; i += 1) {
+              const freq = barToFrequency(i);
+              const bin = Math.max(0, Math.min(spectrumLiveData.length - 1, Math.floor((freq / nyquist) * spectrumLiveData.length)));
+              const raw = spectrumLiveData[bin] / 255;
+
+              const band = getBandInfo(freq);
+              const gated = raw < band.gate ? 0 : raw;
+              const target = Math.min(1, Math.pow(gated, 1.04) * band.gain);
+              const prev = spectrumSmoothedBars[i];
+              const blend = target > prev ? 0.38 : (target === 0 ? 0.26 : 0.14);
+              const smoothed = prev + (target - prev) * blend;
+              spectrumSmoothedBars[i] = smoothed;
+
+              const prevCap = spectrumPeakCaps[i];
+              const nextCap = smoothed > prevCap ? smoothed : Math.max(0, prevCap - 0.022);
+              spectrumPeakCaps[i] = nextCap;
+
+              const barHeight = Math.max(4, smoothed * (h - 6));
+              const x = i * barWidth + 1;
+              const y = h - barHeight;
+              const capY = h - Math.max(3, nextCap * (h - 6));
+              const c = resolvedSpectrumPalette[band.key];
+              const glow = 0.24 + smoothed * 0.5;
+
+              spectrumCtx.fillStyle = `rgba(${c[0]}, ${c[1]}, ${c[2]}, ${glow})`;
+              spectrumCtx.fillRect(x, y, Math.max(2, barWidth - 2), barHeight);
+              spectrumCtx.fillStyle = `rgba(${c[0]}, ${c[1]}, ${c[2]}, ${0.65 + smoothed * 0.28})`;
+              spectrumCtx.fillRect(x, capY, Math.max(2, barWidth - 2), 2);
+            }
+
+            spectrumAnimationFrame = requestAnimationFrame(renderSpectrumFrame);
+            return;
+          }
+
+
+          const duration = Math.max(0.001, wavesurfer.getDuration() || 0.001);
+          const currentTime = wavesurfer.getCurrentTime ? wavesurfer.getCurrentTime() : 0;
+          const envelopeSize = spectrumEnvelopeBands && spectrumEnvelopeBands.low
+            ? spectrumEnvelopeBands.low.length
+            : 0;
+          const currentIndex = envelopeSize > 0
+            ? Math.floor((currentTime / duration) * (envelopeSize - 1))
+            : 0;
 
           for (let i = 0; i < spectrumBars; i += 1) {
-            const dataIndex = Math.floor((i / spectrumBars) * spectrumData.length);
-            const value = spectrumData[dataIndex] / 255;
-            const shaped = Math.pow(value, 1.4);
-            const barHeight = Math.max(4, shaped * (h - 6));
+            let bandValue = 0.05;
+            const freq = barToFrequency(i);
+            const band = getBandInfo(freq);
+            if (spectrumEnvelopeBands && envelopeSize > 0) {
+              const idx = Math.max(0, Math.min(envelopeSize - 1, currentIndex));
+              if (band.key === 'low') {
+                bandValue = spectrumEnvelopeBands.low[idx];
+              } else if (band.key === 'lowMid') {
+                bandValue = spectrumEnvelopeBands.lowMid[idx];
+              } else if (band.key === 'highMid') {
+                bandValue = spectrumEnvelopeBands.highMid[idx];
+              } else {
+                bandValue = spectrumEnvelopeBands.highs[idx];
+              }
+            }
+
+            const target = Math.min(1, Math.pow(bandValue * spectrumBarVoicing[i], 0.92));
+
+            const gatedTarget = target < band.gate ? 0 : target;
+
+            const prev = spectrumSmoothedBars[i];
+            const blend = gatedTarget > prev ? 0.45 : (gatedTarget === 0 ? 0.3 : 0.18);
+            const smoothed = prev + (gatedTarget - prev) * blend;
+            spectrumSmoothedBars[i] = smoothed;
+
+            const prevCap = spectrumPeakCaps[i];
+            const nextCap = smoothed > prevCap ? smoothed : Math.max(0, prevCap - 0.02);
+            spectrumPeakCaps[i] = nextCap;
+
+            const barHeight = Math.max(4, smoothed * (h - 6));
             const x = i * barWidth + 1;
             const y = h - barHeight;
+            const capY = h - Math.max(3, nextCap * (h - 6));
+            const c = resolvedSpectrumPalette[band.key];
 
-            const glow = 0.2 + shaped * 0.5;
-            spectrumCtx.fillStyle = `rgba(${spectrumColor.r}, ${spectrumColor.g}, ${spectrumColor.b}, ${glow})`;
+            const glow = 0.22 + smoothed * 0.46;
+            spectrumCtx.fillStyle = `rgba(${c[0]}, ${c[1]}, ${c[2]}, ${glow})`;
             spectrumCtx.fillRect(x, y, Math.max(2, barWidth - 2), barHeight);
+            spectrumCtx.fillStyle = `rgba(${c[0]}, ${c[1]}, ${c[2]}, ${0.64 + smoothed * 0.26})`;
+            spectrumCtx.fillRect(x, capY, Math.max(2, barWidth - 2), 2);
           }
 
           spectrumAnimationFrame = requestAnimationFrame(renderSpectrumFrame);
         }
 
         function startSpectrum() {
-          if (!ensureSpectrumAnalyser()) {
-            return;
-          }
-
-          if (spectrumAudioCtx && spectrumAudioCtx.state === 'suspended') {
-            spectrumAudioCtx.resume();
+          if (ensureLiveSpectrumAnalyser() && spectrumLiveAudioCtx && spectrumLiveAudioCtx.state === 'suspended') {
+            spectrumLiveAudioCtx.resume();
           }
 
           if (!spectrumAnimationFrame) {
@@ -411,10 +659,19 @@
             spectrumAnimationFrame = null;
           }
 
+          for (let i = 0; i < spectrumSmoothedBars.length; i += 1) {
+            spectrumSmoothedBars[i] = 0;
+            spectrumPeakCaps[i] = 0;
+          }
+
           drawIdleSpectrum();
         }
 
         function shouldPreloadAggressively() {
+          if (isMobileDevice) {
+            return false;
+          }
+
           const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
           if (!connection) {
             return true;
@@ -562,7 +819,7 @@
         }
 
         function applyPlaybackOptions() {
-          const speed = Number(speedControl.value);
+          let speed = Number(speedControl.value);
           const preservePitch = stretchToggle.checked && !isMobileDevice;
 
           // On mobile browsers, preserve-pitch time stretch is often unstable.
@@ -583,16 +840,36 @@
           renderSpeedValue();
 
           // preservePitch=true keeps pitch stable while speed changes (time-stretch feel)
-          try {
-            wavesurfer.setPlaybackRate(speed, preservePitch);
-          } catch (err) {
-            wavesurfer.setPlaybackRate(speed);
+          if (isMobileDevice && mediaElement) {
+            mediaElement.playbackRate = speed;
+          } else {
+            try {
+              wavesurfer.setPlaybackRate(speed, preservePitch);
+            } catch (err) {
+              wavesurfer.setPlaybackRate(speed);
+            }
           }
 
           persistPlaybackOptions();
         }
 
+        function syncMobileStretchMode() {
+          if (!isMobileDevice) {
+            return;
+          }
+
+          // Stretch is unstable on most mobile browsers; keep control visible but disabled.
+          stretchToggle.checked = false;
+          stretchToggle.disabled = true;
+          stretchToggle.setAttribute('aria-disabled', 'true');
+          stretchToggle.title = 'Time stretch is available on desktop only';
+          speedControl.disabled = false;
+          speedControl.setAttribute('aria-disabled', 'false');
+          speedControl.style.opacity = '1';
+        }
+
         restorePlaybackOptions();
+        syncMobileStretchMode();
         populateTrackSelect();
         resizeSpectrumCanvas();
         window.addEventListener('resize', resizeSpectrumCanvas);
@@ -625,6 +902,12 @@
           }
 
           renderSpeedValue();
+        });
+        speedControl.addEventListener('change', () => {
+          if (!isMobileDevice) {
+            applyPlaybackOptions();
+            return;
+          }
 
           if (speedInputFrame) {
             cancelAnimationFrame(speedInputFrame);
@@ -635,8 +918,10 @@
             applyPlaybackOptions();
           });
         });
-        speedControl.addEventListener('change', applyPlaybackOptions);
-        stretchToggle.addEventListener('change', applyPlaybackOptions);
+        stretchToggle.addEventListener('change', () => {
+          syncMobileStretchMode();
+          applyPlaybackOptions();
+        });
 
         nextBtn.addEventListener('click', () => {
           loadTrackByIndex(currentTrack + 1);
@@ -653,16 +938,19 @@
         wavesurfer.on('finish', () => {
           setPlayIcon(false);
           stopSpectrum();
+          musicPanel.classList.remove('eq-active');
           setStatus('ready', 'Finished');
         });
 
         wavesurfer.on('play', () => {
           startSpectrum();
+          musicPanel.classList.add('eq-active');
           setStatus('playing', 'Playing');
         });
 
         wavesurfer.on('pause', () => {
           stopSpectrum();
+          musicPanel.classList.remove('eq-active');
           if (!isLoadingTrack) {
             setStatus('ready', 'Paused');
           }
@@ -672,6 +960,7 @@
           setLoadingState(false);
           trackNameDiv.textContent = formatTrackName(tracks[currentTrack]);
           setStatus('ready', 'Ready');
+          buildSpectrumEnvelope();
           applyPlaybackOptions();
           preloadNeighborTracks();
 
@@ -688,6 +977,7 @@
           setLoadingState(false);
           trackNameDiv.textContent = 'Failed to load track';
           stopSpectrum();
+          musicPanel.classList.remove('eq-active');
           setStatus('error', 'Error');
         });
 
@@ -711,6 +1001,12 @@
         statusId: 'statusBeats',
         spectrumCanvasId: 'spectrumBeats',
         spectrumColor: { r: 53, g: 231, b: 255 },
+        spectrumPalette: {
+          low: [59, 212, 255],
+          lowMid: [68, 234, 255],
+          highMid: [101, 245, 226],
+          highs: [172, 224, 255]
+        },
         speedSelectId: 'speedBeats',
         speedLabelId: 'speedBeatsValue',
         stretchToggleId: 'stretchBeats',
@@ -732,6 +1028,12 @@
         statusId: 'statusMelodies',
         spectrumCanvasId: 'spectrumMelodies',
         spectrumColor: { r: 116, g: 255, b: 195 },
+        spectrumPalette: {
+          low: [80, 236, 189],
+          lowMid: [105, 246, 204],
+          highMid: [139, 250, 218],
+          highs: [195, 255, 238]
+        },
         speedSelectId: 'speedMelodies',
         speedLabelId: 'speedMelodiesValue',
         stretchToggleId: 'stretchMelodies',

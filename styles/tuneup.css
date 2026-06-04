@@ -640,6 +640,11 @@ body.tuneup-page .speed-slider::-moz-range-thumb {
     padding: 5px;
   }
 
+  body.tuneup-page .spectrum-visualizer {
+    height: 54px;
+    margin-top: 6px;
+  }
+
   body.tuneup-page .music-grid {
     grid-template-columns: 1fr;
     gap: 10px;
