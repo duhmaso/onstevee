@@ -288,6 +288,7 @@
         const speedControl = document.getElementById(speedSelectId);
         const speedLabel = document.getElementById(speedLabelId);
         const stretchToggle = document.getElementById(stretchToggleId);
+        const isMobileDevice = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent || '');
         const preloadedTracks = new Set();
         const spectrumBars = 26;
         let spectrumAudioCtx = null;
@@ -295,6 +296,7 @@
         let spectrumData = null;
         let spectrumSourceNode = null;
         let spectrumAnimationFrame = null;
+        let speedInputFrame = null;
 
         function setStatus(state, label) {
           statusEl.dataset.state = state;
@@ -561,7 +563,22 @@
 
         function applyPlaybackOptions() {
           const speed = Number(speedControl.value);
-          const preservePitch = stretchToggle.checked;
+          const preservePitch = stretchToggle.checked && !isMobileDevice;
+
+          // On mobile browsers, preserve-pitch time stretch is often unstable.
+          // Keep slider speed changes, but fall back to playback-rate-only behavior.
+          const mediaElement = wavesurfer.getMediaElement ? wavesurfer.getMediaElement() : null;
+          if (mediaElement) {
+            if ('preservesPitch' in mediaElement) {
+              mediaElement.preservesPitch = preservePitch;
+            }
+            if ('webkitPreservesPitch' in mediaElement) {
+              mediaElement.webkitPreservesPitch = preservePitch;
+            }
+            if ('mozPreservesPitch' in mediaElement) {
+              mediaElement.mozPreservesPitch = preservePitch;
+            }
+          }
 
           renderSpeedValue();
 
@@ -601,7 +618,23 @@
           setPlayIcon(wavesurfer.isPlaying());
         });
 
-        speedControl.addEventListener('input', applyPlaybackOptions);
+        speedControl.addEventListener('input', () => {
+          if (!isMobileDevice) {
+            applyPlaybackOptions();
+            return;
+          }
+
+          renderSpeedValue();
+
+          if (speedInputFrame) {
+            cancelAnimationFrame(speedInputFrame);
+          }
+
+          speedInputFrame = requestAnimationFrame(() => {
+            speedInputFrame = null;
+            applyPlaybackOptions();
+          });
+        });
         speedControl.addEventListener('change', applyPlaybackOptions);
         stretchToggle.addEventListener('change', applyPlaybackOptions);
 
