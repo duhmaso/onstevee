@@ -1,7 +1,12 @@
 /* Shared tune-up styles for production pages */
 
 html {
+  background-color: #070d1b;
   background: radial-gradient(circle at top, #16233f 0%, #0b1326 45%, #070d1b 100%);
+}
+
+body {
+  background-color: #070d1b;
 }
 
 html::before,
@@ -30,6 +35,15 @@ html::after {
 
 body.tuneup-page {
   z-index: 1;
+}
+
+body.tuneup-page::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at top, #16233f 0%, #0b1326 45%, #070d1b 100%);
+  z-index: -1;
+  pointer-events: none;
 }
 
 body.tuneup-page {
