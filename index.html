@@ -24,20 +24,6 @@
 <body class="tuneup-page has-corner-donate">
   <header>
     <div class="header-utilities">
-      <div id="donate" aria-label="Support My Work">
-        <div class="center-donate-btn">
-          <form action="https://www.paypal.biz/okmaso" method="post" target="_blank">
-            <input type="hidden" name="hosted_button_id" value="YOUR_PAYPAL_BUTTON_ID">
-            <button type="submit" class="wave-btn cash-btn paypal-btn" aria-label="Donate with PayPal">
-              <i class="fa-brands fa-paypal"></i>
-            </button>
-          </form>
-          <a href="https://cash.app/$duhmaso" target="_blank" class="wave-btn cash-btn" aria-label="Donate with Cash App">
-            <i class="fa-brands fa-cc-visa"></i>
-          </a>
-        </div>
-      </div>
-
       <div class="social-links">
         <a href="https://instagram.com/duhmaso" target="_blank" aria-label="Instagram">
           <i class="fa-brands fa-instagram"></i>
@@ -65,7 +51,7 @@
 
   <!--Swag Section -->
   
-    <p><em>immerse yourself into the subbass</em></p>
+    <p class="tagline"><em>immerse yourself into the subbass</em></p>
  
 
   <!-- Music Sections with WaveSurfer Playlists -->
@@ -75,6 +61,7 @@
 
       <p id="trackNameBeats" class="track-name">No track loaded</p>
       <figure id="waveform-beats" class="waveform"></figure>
+      <canvas id="spectrumBeats" class="spectrum-visualizer" width="520" height="64" aria-label="Beats frequency visualizer"></canvas>
 
       <section class="controls">
         <button id="prevBtnBeats" class="wave-btn" aria-label="Previous beat">
@@ -90,17 +77,21 @@
           <i class="fa fa-download"></i>
         </a>
       </section>
+      <p id="statusBeats" class="player-status" data-state="idle" aria-live="polite">Idle</p>
 
       <div class="playback-tools" aria-label="Beats playback options">
         <label for="speedBeats">Speed</label>
-        <input id="speedBeats" class="speed-slider" type="range" min="0.5" max="2" step="0.05" value="1" aria-label="Beats playback speed">
+        <input id="speedBeats" class="speed-slider" type="range" min="0.5" max="2" step="0.25" value="1" list="speedMarks" aria-label="Beats playback speed">
         <span id="speedBeatsValue" class="speed-value">1.00x</span>
-
         <label class="toggle-row" for="stretchBeats">
           <input id="stretchBeats" type="checkbox" checked>
           Time stretch
         </label>
+        
       </div>
+
+      
+      <select id="trackSelectBeats" class="track-picker" size="3" aria-label="Beat track list"></select>
     </section>
 
     <section id="music-melodies" class="music-panel">
@@ -108,6 +99,7 @@
 
       <p id="trackNameMelodies" class="track-name">No track loaded</p>
       <figure id="waveform-melodies" class="waveform"></figure>
+      <canvas id="spectrumMelodies" class="spectrum-visualizer" width="520" height="64" aria-label="Melodies frequency visualizer"></canvas>
 
       <section class="controls">
         <button id="prevBtnMelodies" class="wave-btn" aria-label="Previous melody">
@@ -123,10 +115,11 @@
           <i class="fa fa-download"></i>
         </a>
       </section>
+      <p id="statusMelodies" class="player-status" data-state="idle" aria-live="polite">Idle</p>
 
       <div class="playback-tools" aria-label="Melodies playback options">
         <label for="speedMelodies">Speed</label>
-        <input id="speedMelodies" class="speed-slider" type="range" min="0.5" max="2" step="0.05" value="1" aria-label="Melodies playback speed">
+        <input id="speedMelodies" class="speed-slider" type="range" min="0.5" max="2" step="0.25" value="1" list="speedMarks" aria-label="Melodies playback speed">
         <span id="speedMelodiesValue" class="speed-value">1.00x</span>
 
         <label class="toggle-row" for="stretchMelodies">
@@ -134,6 +127,9 @@
           Time stretch
         </label>
       </div>
+
+     
+      <select id="trackSelectMelodies" class="track-picker" size="3" aria-label="Melody track list"></select>
     </section>
   </section>
 
@@ -148,19 +144,7 @@
     <p>Coming soon.</p>
   </section>
 
-  <section class="mobile-utilities" aria-label="Mobile support and social links">
-    <div class="center-donate-btn" aria-label="Support My Work">
-      <form action="https://www.paypal.biz/okmaso" method="post" target="_blank">
-        <input type="hidden" name="hosted_button_id" value="YOUR_PAYPAL_BUTTON_ID">
-        <button type="submit" class="wave-btn cash-btn paypal-btn" aria-label="Donate with PayPal">
-          <i class="fa-brands fa-paypal"></i>
-        </button>
-      </form>
-      <a href="https://cash.app/$duhmaso" target="_blank" class="wave-btn cash-btn" aria-label="Donate with Cash App">
-        <i class="fa-brands fa-cc-visa"></i>
-      </a>
-    </div>
-
+  <section class="mobile-utilities" aria-label="Mobile social links">
     <div class="social-links" aria-label="Social links">
       <a href="https://instagram.com/duhmaso" target="_blank" aria-label="Instagram">
         <i class="fa-brands fa-instagram"></i>
@@ -185,6 +169,31 @@
     <p>&copy; 2026 SUBBASSES. $2300</p>
   </footer>
 
+  <section id="support-bottom" class="support-section" aria-label="Support">
+    <h2>Support</h2>
+    <div class="center-donate-btn" aria-label="Support payments">
+      <form action="https://www.paypal.biz/okmaso" method="post" target="_blank">
+        <input type="hidden" name="hosted_button_id" value="YOUR_PAYPAL_BUTTON_ID">
+        <button type="submit" class="wave-btn cash-btn paypal-btn" aria-label="Donate with PayPal">
+          <i class="fa-brands fa-paypal"></i>
+        </button>
+      </form>
+      <a href="https://cash.app/$duhmaso" target="_blank" class="wave-btn cash-btn" aria-label="Donate with Cash App">
+        <i class="fa-brands fa-cc-visa"></i>
+      </a>
+    </div>
+  </section>
+
+  <datalist id="speedMarks">
+    <option value="0.5"></option>
+    <option value="0.75"></option>
+    <option value="1"></option>
+    <option value="1.25"></option>
+    <option value="1.5"></option>
+    <option value="1.75"></option>
+    <option value="2"></option>
+  </datalist>
+
   <!-- WaveSurfer.js library -->
   <script src="https://unpkg.com/wavesurfer.js"></script>
 
@@ -205,7 +214,13 @@
         "music/paul 170.mp3",
         "music/sweetlyfe 154.mp3",
         "music/type 145.mp3",
-        "music/wisp unf 148.mp3"
+        "music/wisp unf 148.mp3",
+        "music/rain 136.mp3",
+        "music/spy 160.mp3",
+        "music/serum 2night 134.mp3",
+        "music/future 148.mp3",
+        "music/sckas a dog 166.mp3",
+        "music/rpten 143 master.mp3"
       ];
 
       const melodyTracks = [
@@ -219,7 +234,11 @@
         "music/melodies/rain 136.mp3",
         "music/melodies/serum 2night 134.wav",
         "music/melodies/sire 140 d major.wav",
-        "music/melodies/wired 160.mp3"
+        "music/melodies/wired 160.mp3",
+        "music/melodies/gladiaator 120.wav",
+        "music/melodies/gladiaator'd 133.wav",
+        "music/melodies/clav 133.mp3",
+        "music/melodies/parlay 163.mp3",
       ];
 
       function setupPlayer(config) {
@@ -234,6 +253,10 @@
           prevBtnId,
           downloadBtnId,
           trackNameId,
+          trackSelectId,
+          statusId,
+          spectrumCanvasId,
+          spectrumColor,
           speedSelectId,
           speedLabelId,
           stretchToggleId,
@@ -241,11 +264,15 @@
         } = config;
 
         let currentTrack = 0;
+        let isLoadingTrack = false;
+        let queuedTrackIndex = null;
 
         const wavesurfer = WaveSurfer.create({
           container,
           waveColor,
           progressColor,
+          cursorColor: '#35e7ff',
+          cursorWidth: 2,
           height: waveformHeight || 68
         });
 
@@ -254,9 +281,196 @@
         const prevBtn = document.getElementById(prevBtnId);
         const downloadBtn = document.getElementById(downloadBtnId);
         const trackNameDiv = document.getElementById(trackNameId);
+        const trackSelect = document.getElementById(trackSelectId);
+        const statusEl = document.getElementById(statusId);
+        const spectrumCanvas = document.getElementById(spectrumCanvasId);
+        const spectrumCtx = spectrumCanvas.getContext('2d');
         const speedControl = document.getElementById(speedSelectId);
         const speedLabel = document.getElementById(speedLabelId);
         const stretchToggle = document.getElementById(stretchToggleId);
+        const preloadedTracks = new Set();
+        const spectrumBars = 26;
+        let spectrumAudioCtx = null;
+        let spectrumAnalyser = null;
+        let spectrumData = null;
+        let spectrumSourceNode = null;
+        let spectrumAnimationFrame = null;
+
+        function setStatus(state, label) {
+          statusEl.dataset.state = state;
+          statusEl.textContent = label;
+        }
+
+        function drawIdleSpectrum() {
+          const w = spectrumCanvas.width;
+          const h = spectrumCanvas.height;
+          const barWidth = w / spectrumBars;
+
+          spectrumCtx.clearRect(0, 0, w, h);
+
+          for (let i = 0; i < spectrumBars; i += 1) {
+            const x = i * barWidth + 1;
+            const base = 0.08 + ((i % 4) * 0.015);
+            const barHeight = Math.max(4, h * base);
+            const y = h - barHeight;
+
+            spectrumCtx.fillStyle = 'rgba(53, 231, 255, 0.2)';
+            spectrumCtx.fillRect(x, y, Math.max(2, barWidth - 2), barHeight);
+          }
+        }
+
+        function resizeSpectrumCanvas() {
+          const ratio = window.devicePixelRatio || 1;
+          const cssWidth = Math.max(240, Math.floor(spectrumCanvas.clientWidth || 520));
+          const cssHeight = 64;
+
+          spectrumCanvas.width = Math.floor(cssWidth * ratio);
+          spectrumCanvas.height = Math.floor(cssHeight * ratio);
+          spectrumCtx.setTransform(ratio, 0, 0, ratio, 0, 0);
+          drawIdleSpectrum();
+        }
+
+        function ensureSpectrumAnalyser() {
+          if (spectrumAnalyser) {
+            return true;
+          }
+
+          const mediaElement = wavesurfer.getMediaElement
+            ? wavesurfer.getMediaElement()
+            : null;
+
+          if (!mediaElement) {
+            return false;
+          }
+
+          try {
+            spectrumAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            spectrumAnalyser = spectrumAudioCtx.createAnalyser();
+            spectrumAnalyser.fftSize = 256;
+            spectrumAnalyser.smoothingTimeConstant = 0.82;
+            spectrumData = new Uint8Array(spectrumAnalyser.frequencyBinCount);
+            spectrumSourceNode = spectrumAudioCtx.createMediaElementSource(mediaElement);
+
+            spectrumSourceNode.connect(spectrumAnalyser);
+            spectrumAnalyser.connect(spectrumAudioCtx.destination);
+
+            return true;
+          } catch (err) {
+            return false;
+          }
+        }
+
+        function renderSpectrumFrame() {
+          if (!spectrumAnalyser) {
+            return;
+          }
+
+          spectrumAnalyser.getByteFrequencyData(spectrumData);
+
+          const w = spectrumCanvas.clientWidth || 520;
+          const h = 64;
+          const barWidth = w / spectrumBars;
+
+          spectrumCtx.clearRect(0, 0, w, h);
+
+          for (let i = 0; i < spectrumBars; i += 1) {
+            const dataIndex = Math.floor((i / spectrumBars) * spectrumData.length);
+            const value = spectrumData[dataIndex] / 255;
+            const shaped = Math.pow(value, 1.4);
+            const barHeight = Math.max(4, shaped * (h - 6));
+            const x = i * barWidth + 1;
+            const y = h - barHeight;
+
+            const glow = 0.2 + shaped * 0.5;
+            spectrumCtx.fillStyle = `rgba(${spectrumColor.r}, ${spectrumColor.g}, ${spectrumColor.b}, ${glow})`;
+            spectrumCtx.fillRect(x, y, Math.max(2, barWidth - 2), barHeight);
+          }
+
+          spectrumAnimationFrame = requestAnimationFrame(renderSpectrumFrame);
+        }
+
+        function startSpectrum() {
+          if (!ensureSpectrumAnalyser()) {
+            return;
+          }
+
+          if (spectrumAudioCtx && spectrumAudioCtx.state === 'suspended') {
+            spectrumAudioCtx.resume();
+          }
+
+          if (!spectrumAnimationFrame) {
+            spectrumAnimationFrame = requestAnimationFrame(renderSpectrumFrame);
+          }
+        }
+
+        function stopSpectrum() {
+          if (spectrumAnimationFrame) {
+            cancelAnimationFrame(spectrumAnimationFrame);
+            spectrumAnimationFrame = null;
+          }
+
+          drawIdleSpectrum();
+        }
+
+        function shouldPreloadAggressively() {
+          const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+          if (!connection) {
+            return true;
+          }
+
+          if (connection.saveData) {
+            return false;
+          }
+
+          const effectiveType = String(connection.effectiveType || '');
+          return effectiveType !== 'slow-2g' && effectiveType !== '2g';
+        }
+
+        function preloadTrack(index) {
+          if (!shouldPreloadAggressively() || tracks.length === 0) {
+            return;
+          }
+
+          const normalizedIndex = (index + tracks.length) % tracks.length;
+          const filePath = tracks[normalizedIndex];
+
+          if (preloadedTracks.has(filePath)) {
+            return;
+          }
+
+          preloadedTracks.add(filePath);
+
+          const preloadAudio = new Audio();
+          preloadAudio.preload = 'auto';
+          preloadAudio.src = filePath;
+          preloadAudio.load();
+        }
+
+        function preloadNeighborTracks() {
+          const schedule = window.requestIdleCallback
+            ? window.requestIdleCallback
+            : function(cb) { return setTimeout(cb, 120); };
+
+          schedule(() => {
+            preloadTrack(currentTrack + 1);
+            preloadTrack(currentTrack - 1);
+          });
+        }
+
+        function formatTrackName(filePath) {
+          return filePath.split('/').pop().replace(/\.(mp3|wav)$/i, '');
+        }
+
+        function populateTrackSelect() {
+          trackSelect.innerHTML = '';
+
+          tracks.forEach((filePath, index) => {
+            const option = document.createElement('option');
+            option.value = String(index);
+            option.textContent = formatTrackName(filePath);
+            trackSelect.appendChild(option);
+          });
+        }
 
         function renderSpeedValue() {
           speedLabel.textContent = Number(speedControl.value).toFixed(2) + 'x';
@@ -300,13 +514,49 @@
           }
         }
 
-        function loadTrack(filePath) {
-          wavesurfer.load(filePath);
-          const fileName = filePath.split('/').pop().replace(/\.(mp3|wav)$/i, '');
-          trackNameDiv.textContent = fileName;
+        function setLoadingState(isLoading) {
+          isLoadingTrack = isLoading;
+          playBtn.disabled = isLoading;
+          playBtn.setAttribute('aria-busy', isLoading ? 'true' : 'false');
+        }
+
+        function loadTrackByIndex(index) {
+          if (tracks.length === 0) {
+            return;
+          }
+
+          const normalizedIndex = (index + tracks.length) % tracks.length;
+
+          if (isLoadingTrack) {
+            queuedTrackIndex = normalizedIndex;
+            currentTrack = normalizedIndex;
+            trackSelect.value = String(currentTrack);
+            const queuedName = formatTrackName(tracks[currentTrack]);
+            trackNameDiv.textContent = queuedName + ' (loading...)';
+            downloadBtn.href = tracks[currentTrack];
+            setPlayIcon(false);
+            stopSpectrum();
+            setStatus('loading', 'Queued');
+            return;
+          }
+
+          currentTrack = normalizedIndex;
+          const filePath = tracks[currentTrack];
+          const fileName = formatTrackName(filePath);
+
+          setLoadingState(true);
+          queuedTrackIndex = null;
+          trackSelect.value = String(currentTrack);
+          trackNameDiv.textContent = fileName + ' (loading...)';
           downloadBtn.href = filePath;
           setPlayIcon(false);
-          applyPlaybackOptions();
+          stopSpectrum();
+          setStatus('loading', 'Loading');
+
+          wavesurfer.stop();
+          wavesurfer.load(filePath);
+
+          preloadNeighborTracks();
         }
 
         function applyPlaybackOptions() {
@@ -326,18 +576,27 @@
         }
 
         restorePlaybackOptions();
+        populateTrackSelect();
+        resizeSpectrumCanvas();
+        window.addEventListener('resize', resizeSpectrumCanvas);
 
         if (tracks.length > 0) {
-          loadTrack(tracks[currentTrack]);
+          loadTrackByIndex(currentTrack);
+          preloadTrack(currentTrack);
         } else {
           trackNameDiv.textContent = 'No tracks yet';
+          setStatus('error', 'No tracks');
           downloadBtn.removeAttribute('href');
-          [playBtn, nextBtn, prevBtn].forEach(btn => {
+          [playBtn, nextBtn, prevBtn, trackSelect].forEach(btn => {
             btn.disabled = true;
           });
         }
 
         playBtn.addEventListener('click', () => {
+          if (isLoadingTrack) {
+            return;
+          }
+
           wavesurfer.playPause();
           setPlayIcon(wavesurfer.isPlaying());
         });
@@ -347,21 +606,56 @@
         stretchToggle.addEventListener('change', applyPlaybackOptions);
 
         nextBtn.addEventListener('click', () => {
-          currentTrack = (currentTrack + 1) % tracks.length;
-          loadTrack(tracks[currentTrack]);
+          loadTrackByIndex(currentTrack + 1);
         });
 
         prevBtn.addEventListener('click', () => {
-          currentTrack = (currentTrack - 1 + tracks.length) % tracks.length;
-          loadTrack(tracks[currentTrack]);
+          loadTrackByIndex(currentTrack - 1);
+        });
+
+        trackSelect.addEventListener('change', () => {
+          loadTrackByIndex(Number(trackSelect.value));
         });
 
         wavesurfer.on('finish', () => {
           setPlayIcon(false);
+          stopSpectrum();
+          setStatus('ready', 'Finished');
+        });
+
+        wavesurfer.on('play', () => {
+          startSpectrum();
+          setStatus('playing', 'Playing');
+        });
+
+        wavesurfer.on('pause', () => {
+          stopSpectrum();
+          if (!isLoadingTrack) {
+            setStatus('ready', 'Paused');
+          }
         });
 
         wavesurfer.on('ready', () => {
+          setLoadingState(false);
+          trackNameDiv.textContent = formatTrackName(tracks[currentTrack]);
+          setStatus('ready', 'Ready');
           applyPlaybackOptions();
+          preloadNeighborTracks();
+
+          if (queuedTrackIndex !== null && queuedTrackIndex !== currentTrack) {
+            const nextQueuedTrack = queuedTrackIndex;
+            queuedTrackIndex = null;
+            loadTrackByIndex(nextQueuedTrack);
+          } else {
+            queuedTrackIndex = null;
+          }
+        });
+
+        wavesurfer.on('error', () => {
+          setLoadingState(false);
+          trackNameDiv.textContent = 'Failed to load track';
+          stopSpectrum();
+          setStatus('error', 'Error');
         });
 
         applyPlaybackOptions();
@@ -380,6 +674,10 @@
         prevBtnId: 'prevBtnBeats',
         downloadBtnId: 'downloadBtnBeats',
         trackNameId: 'trackNameBeats',
+        trackSelectId: 'trackSelectBeats',
+        statusId: 'statusBeats',
+        spectrumCanvasId: 'spectrumBeats',
+        spectrumColor: { r: 53, g: 231, b: 255 },
         speedSelectId: 'speedBeats',
         speedLabelId: 'speedBeatsValue',
         stretchToggleId: 'stretchBeats',
@@ -397,6 +695,10 @@
         prevBtnId: 'prevBtnMelodies',
         downloadBtnId: 'downloadBtnMelodies',
         trackNameId: 'trackNameMelodies',
+        trackSelectId: 'trackSelectMelodies',
+        statusId: 'statusMelodies',
+        spectrumCanvasId: 'spectrumMelodies',
+        spectrumColor: { r: 116, g: 255, b: 195 },
         speedSelectId: 'speedMelodies',
         speedLabelId: 'speedMelodiesValue',
         stretchToggleId: 'stretchMelodies',

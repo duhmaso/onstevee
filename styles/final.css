@@ -190,6 +190,31 @@ nav a:active {
   background: rgba(123, 44, 255, 0.15);
 }
 
+.track-picker-label {
+  display: block;
+  margin-top: 4px;
+  margin-bottom: 6px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.track-picker {
+  width: min(100%, 320px);
+  margin: 0 auto 8px;
+  display: block;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  background: rgba(255, 255, 255, 0.9);
+  color: #17223a;
+  font-size: 14px;
+}
+
+.track-picker:focus-visible {
+  outline: 2px solid rgba(12, 89, 231, 0.35);
+  outline-offset: 2px;
+}
+
 .header-logo {
   max-width: 300px;           
   height: auto;

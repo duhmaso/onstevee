@@ -1,7 +1,7 @@
 /* Shared tune-up styles for production pages */
 
 html {
-  background: #f3f3f3;
+  background: radial-gradient(circle at top, #16233f 0%, #0b1326 45%, #070d1b 100%);
 }
 
 html::before,
@@ -36,24 +36,66 @@ body.tuneup-page {
   max-width: 980px;
   padding: 16px;
   position: relative;
-  border: 3px solid rgba(0, 0, 0, 0.18);
+  border: 3px solid rgba(180, 205, 255, 0.22);
   border-radius: 22px;
-  box-shadow: 0 22px 40px rgba(0, 0, 0, 0.18), inset 0 0 0 1px rgba(255, 255, 255, 0.35);
-  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.86));
+  box-shadow: 0 22px 40px rgba(0, 0, 0, 0.4), inset 0 0 0 1px rgba(190, 218, 255, 0.14);
+  background-image: linear-gradient(165deg, rgba(9, 16, 33, 0.95), rgba(20, 35, 58, 0.92));
+  color: #e9f0ff;
   text-shadow: none;
+}
+
+/* Override legacy black text rules from base stylesheet on tuneup pages */
+body.tuneup-page,
+body.tuneup-page p,
+body.tuneup-page h1,
+body.tuneup-page h2,
+body.tuneup-page h3,
+body.tuneup-page h4,
+body.tuneup-page h5,
+body.tuneup-page h6,
+body.tuneup-page label,
+body.tuneup-page li,
+body.tuneup-page dt,
+body.tuneup-page dd,
+body.tuneup-page small,
+body.tuneup-page em,
+body.tuneup-page strong {
+  color: #e9f0ff;
+}
+
+body.tuneup-page a {
+  color: #9bc3ff;
+}
+
+body.tuneup-page .legal-disclaimer,
+body.tuneup-page .legal-disclaimer a {
+  color: #d9e8ff;
 }
 
 body.tuneup-page header {
   padding: 8px 8px 2px;
   border-radius: 16px;
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(18, 28, 48, 0.72);
   backdrop-filter: blur(4px);
 }
 
 body.tuneup-page nav a,
 body.tuneup-page .social-links a,
 body.tuneup-page #trackName {
-  background: rgba(255, 255, 255, 0.75);
+  background: rgba(30, 46, 76, 0.8);
+  color: #e9f0ff;
+}
+
+body.tuneup-page nav a {
+  border: 1px solid rgba(53, 231, 255, 0.45);
+  box-shadow: 0 0 0 rgba(53, 231, 255, 0);
+  transition: box-shadow 0.2s ease, border-color 0.2s ease, transform 0.2s ease, background 0.2s ease;
+}
+
+body.tuneup-page nav a:hover,
+body.tuneup-page nav a:focus-visible {
+  border-color: rgba(53, 231, 255, 0.82);
+  box-shadow: 0 0 10px rgba(53, 231, 255, 0.34), inset 0 0 10px rgba(53, 231, 255, 0.12);
 }
 
 body.tuneup-page #swag,
@@ -67,8 +109,8 @@ body.tuneup-page #contact-section {
   margin-top: 14px;
   padding: 14px;
   border-radius: 16px;
-  background: rgba(255, 255, 255, 0.58);
-  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(18, 28, 48, 0.72);
+  border: 1px solid rgba(185, 214, 255, 0.2);
 }
 
 body.tuneup-page .swag-image {
@@ -81,8 +123,8 @@ body.tuneup-page #waveform {
   max-width: 720px;
   border-radius: 14px;
   padding: 8px;
-  background: rgba(255, 255, 255, 0.75);
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: rgba(19, 30, 53, 0.82);
+  border: 1px solid rgba(185, 214, 255, 0.2);
 }
 
 body.tuneup-page .music-grid {
@@ -95,8 +137,27 @@ body.tuneup-page .music-grid {
 body.tuneup-page .music-panel {
   padding: 10px;
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.7);
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: rgba(16, 26, 46, 0.82);
+  border: 1px solid rgba(53, 231, 255, 0.54);
+  box-shadow: inset 0 0 0 1px rgba(35, 231, 255, 0.16), 0 0 12px rgba(53, 231, 255, 0.16);
+}
+
+body.tuneup-page #music-beats {
+  border-color: rgba(53, 231, 255, 0.62);
+  box-shadow: inset 0 0 0 1px rgba(35, 231, 255, 0.2), 0 0 14px rgba(53, 231, 255, 0.2);
+}
+
+body.tuneup-page #music-melodies {
+  border-color: rgba(53, 231, 255, 0.62);
+  box-shadow: inset 0 0 0 1px rgba(35, 231, 255, 0.2), 0 0 14px rgba(53, 231, 255, 0.2);
+}
+
+body.tuneup-page #music-beats h2 {
+  color: #c4d0ff;
+}
+
+body.tuneup-page #music-melodies h2 {
+  color: #bdebd2;
 }
 
 body.tuneup-page .music-panel h2 {
@@ -108,17 +169,79 @@ body.tuneup-page .music-panel h2 {
 body.tuneup-page .track-name {
   font-weight: 600;
   margin: 6px 0 10px;
-  color: #000000f8;
+  color: #f1f6ff;
   font-size: 14px;
   letter-spacing: 0.3px;
   padding: 5px 10px;
   display: inline-block;
-  background: rgba(123, 44, 255, 0.12);
+  background: rgba(63, 97, 156, 0.46);
   border-radius: 999px;
   max-width: 100%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+body.tuneup-page .track-picker-label {
+  display: block;
+  margin: 6px 0 8px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.35px;
+  text-transform: uppercase;
+  color: #97edff;
+  text-shadow: 0 0 8px rgba(53, 231, 255, 0.25);
+}
+
+body.tuneup-page .track-picker {
+  width: min(100%, 320px);
+  margin: 8px auto 10px;
+  display: block;
+  padding: 6px;
+  border-radius: 12px;
+  border: 1px solid rgba(53, 231, 255, 0.44);
+  background:
+    linear-gradient(180deg, rgba(22, 36, 61, 0.95), rgba(14, 24, 44, 0.95));
+  color: #f1f6ff;
+  font-size: 13px;
+  line-height: 1.35;
+  overflow-y: auto;
+  appearance: none;
+  box-shadow: inset 0 0 0 1px rgba(53, 231, 255, 0.12), 0 0 12px rgba(53, 231, 255, 0.16);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(53, 231, 255, 0.65) rgba(15, 24, 43, 0.9);
+}
+
+body.tuneup-page .track-picker option {
+  margin: 2px 0;
+  padding: 7px 9px;
+  border-radius: 8px;
+  background: rgba(35, 50, 80, 0.75);
+  color: #eaf4ff;
+}
+
+body.tuneup-page .track-picker option:checked {
+  background: linear-gradient(90deg, rgba(53, 231, 255, 0.36), rgba(31, 165, 220, 0.32));
+  color: #ffffff;
+}
+
+body.tuneup-page .track-picker option:hover {
+  background: rgba(53, 231, 255, 0.24);
+}
+
+body.tuneup-page .track-picker::-webkit-scrollbar {
+  width: 8px;
+}
+
+body.tuneup-page .track-picker::-webkit-scrollbar-track {
+  background: rgba(15, 24, 43, 0.95);
+  border-radius: 999px;
+}
+
+body.tuneup-page .track-picker::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(53, 231, 255, 0.8), rgba(35, 164, 223, 0.75));
+  border-radius: 999px;
+  border: 1px solid rgba(146, 246, 255, 0.45);
 }
 
 body.tuneup-page .waveform {
@@ -127,9 +250,21 @@ body.tuneup-page .waveform {
   height: 80px;
   border-radius: 12px;
   padding: 6px;
-  background: rgba(255, 255, 255, 0.78);
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: rgba(21, 33, 56, 0.84);
+  border: 1px solid rgba(185, 214, 255, 0.2);
   overflow: hidden;
+}
+
+body.tuneup-page .spectrum-visualizer {
+  display: block;
+  width: 100%;
+  max-width: 520px;
+  height: 64px;
+  margin: 8px auto 2px;
+  border-radius: 10px;
+  background: linear-gradient(180deg, rgba(14, 23, 41, 0.9), rgba(10, 17, 31, 0.9));
+  border: 1px solid rgba(53, 231, 255, 0.28);
+  box-shadow: inset 0 0 0 1px rgba(53, 231, 255, 0.1), 0 0 10px rgba(53, 231, 255, 0.14);
 }
 
 body.tuneup-page #waveform-beats {
@@ -164,6 +299,41 @@ body.tuneup-page .music-panel .controls {
   margin-top: 8px;
 }
 
+body.tuneup-page .player-status {
+  display: inline-block;
+  margin: 8px auto 2px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  border: 1px solid rgba(146, 246, 255, 0.35);
+  background: rgba(20, 34, 56, 0.8);
+  color: #d6eeff;
+}
+
+body.tuneup-page .player-status[data-state="loading"] {
+  border-color: rgba(255, 210, 110, 0.55);
+  color: #ffd98f;
+}
+
+body.tuneup-page .player-status[data-state="playing"] {
+  border-color: rgba(53, 231, 255, 0.7);
+  color: #97edff;
+  box-shadow: 0 0 8px rgba(53, 231, 255, 0.22);
+}
+
+body.tuneup-page .player-status[data-state="ready"] {
+  border-color: rgba(146, 246, 255, 0.45);
+  color: #c8e6ff;
+}
+
+body.tuneup-page .player-status[data-state="error"] {
+  border-color: rgba(255, 120, 120, 0.7);
+  color: #ffb1b1;
+}
+
 body.tuneup-page .music-panel .wave-btn {
   width: 46px;
   height: 46px;
@@ -171,9 +341,9 @@ body.tuneup-page .music-panel .wave-btn {
   align-items: center;
   justify-content: center;
   border-radius: 10px;
-  border: 1px solid rgba(0, 0, 0, 0.16);
-  background: rgba(255, 255, 255, 0.95);
-  color: #17223a;
+  border: 1px solid rgba(185, 214, 255, 0.24);
+  background: rgba(28, 44, 74, 0.92);
+  color: #e9f0ff;
   text-decoration: none;
   line-height: 1;
   font-size: 15px;
@@ -181,7 +351,7 @@ body.tuneup-page .music-panel .wave-btn {
 }
 
 body.tuneup-page .music-panel .wave-btn:hover {
-  background: rgba(255, 255, 255, 1);
+  background: rgba(38, 58, 97, 0.96);
 }
 
 body.tuneup-page .playback-tools {
@@ -204,8 +374,8 @@ body.tuneup-page .speed-value {
   text-align: center;
   padding: 4px 8px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.85);
-  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: rgba(28, 43, 73, 0.9);
+  border: 1px solid rgba(185, 214, 255, 0.2);
 }
 
 body.tuneup-page .toggle-row {
@@ -214,7 +384,7 @@ body.tuneup-page .toggle-row {
   gap: 6px;
   padding: 4px 8px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(28, 43, 73, 0.85);
 }
 
 body.tuneup-page .toggle-row input {
@@ -231,7 +401,7 @@ body.tuneup-page .feature-section h2 {
 
 body.tuneup-page #embedded-links h2 {
   font-family: inherit;
-  color: #1e2a44;
+  color: #d7e7ff;
   letter-spacing: 0.2px;
   text-transform: none;
 }
@@ -245,8 +415,8 @@ body.tuneup-page .embed-grid {
 body.tuneup-page .embed-card {
   padding: 10px;
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.7);
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: rgba(18, 28, 48, 0.78);
+  border: 1px solid rgba(185, 214, 255, 0.2);
 }
 
 body.tuneup-page .embed-card h3 {
@@ -259,7 +429,7 @@ body.tuneup-page .embed-frame {
   border: 0;
   border-radius: 10px;
   overflow: hidden;
-  background: #fff;
+  background: #111b2f;
 }
 
 body.tuneup-page .embed-frame-youtube {
@@ -279,8 +449,8 @@ body.tuneup-page .embed-placeholder {
   align-items: center;
   justify-content: center;
   border-radius: 10px;
-  border: 1px dashed rgba(0, 0, 0, 0.25);
-  background: rgba(255, 255, 255, 0.55);
+  border: 1px dashed rgba(185, 214, 255, 0.35);
+  background: rgba(24, 37, 64, 0.78);
   font-weight: 600;
 }
 
@@ -292,11 +462,26 @@ body.tuneup-page .wave-btn:hover {
   transform: translateY(-2px) scale(1.04);
 }
 
+body.tuneup-page .header-logo {
+  filter: drop-shadow(0 0 6px rgba(53, 231, 255, 0.22));
+}
+
+body.tuneup-page header a:hover .header-logo,
+body.tuneup-page header a:focus-visible .header-logo {
+  filter: drop-shadow(0 0 10px rgba(53, 231, 255, 0.42));
+}
+
+body.tuneup-page .tagline,
+body.tuneup-page .tagline em {
+  color: rgba(148, 241, 255, 0.9);
+  text-shadow: 0 0 10px rgba(53, 231, 255, 0.22);
+}
+
 /* Compact corner donate panel for index page */
 body.tuneup-page.has-corner-donate .header-utilities {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: 12px;
   margin-bottom: 6px;
 }
@@ -329,6 +514,92 @@ body.tuneup-page.has-corner-donate #donate .cash-btn {
 
 body.tuneup-page .mobile-utilities {
   display: none;
+}
+
+body.tuneup-page .support-section {
+  margin-top: 12px;
+  padding: 12px;
+  border-radius: 14px;
+  background: rgba(18, 28, 48, 0.78);
+  border: 1px solid rgba(185, 214, 255, 0.2);
+  text-align: center;
+}
+
+body.tuneup-page .support-section h2 {
+  margin: 0 0 8px;
+  font-size: 15px;
+  letter-spacing: 0.2px;
+  color: #d9e8ff;
+}
+
+body.tuneup-page .support-section .center-donate-btn {
+  margin: 0;
+  gap: 10px;
+}
+
+body.tuneup-page .support-section .cash-btn {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  min-height: 40px;
+  font-size: 16px;
+}
+
+body.tuneup-page .speed-slider {
+  width: 140px;
+  height: 22px;
+  background: transparent;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+body.tuneup-page .speed-slider::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 999px;
+  background:
+    repeating-linear-gradient(
+      to right,
+      rgba(230, 238, 255, 0.32) 0,
+      rgba(230, 238, 255, 0.32) 1px,
+      transparent 1px,
+      transparent calc(100% / 6)
+    ),
+    linear-gradient(90deg, rgba(65, 95, 152, 0.95), rgba(43, 98, 232, 0.95));
+  border: 1px solid rgba(185, 214, 255, 0.25);
+}
+
+body.tuneup-page .speed-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #e9f0ff;
+  border: 1px solid rgba(16, 29, 52, 0.85);
+  margin-top: -5px;
+}
+
+body.tuneup-page .speed-slider::-moz-range-track {
+  height: 6px;
+  border-radius: 999px;
+  background:
+    repeating-linear-gradient(
+      to right,
+      rgba(230, 238, 255, 0.32) 0,
+      rgba(230, 238, 255, 0.32) 1px,
+      transparent 1px,
+      transparent calc(100% / 6)
+    ),
+    linear-gradient(90deg, rgba(65, 95, 152, 0.95), rgba(43, 98, 232, 0.95));
+  border: 1px solid rgba(185, 214, 255, 0.25);
+}
+
+body.tuneup-page .speed-slider::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #e9f0ff;
+  border: 1px solid rgba(16, 29, 52, 0.85);
 }
 
 @media (max-width: 768px) {
@@ -426,8 +697,8 @@ body.tuneup-page .mobile-utilities {
     margin-top: 10px;
     padding: 10px;
     border-radius: 12px;
-    background: rgba(255, 255, 255, 0.58);
-    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: rgba(18, 28, 48, 0.78);
+    border: 1px solid rgba(185, 214, 255, 0.2);
     display: flex;
     flex-direction: column;
     align-items: center;
