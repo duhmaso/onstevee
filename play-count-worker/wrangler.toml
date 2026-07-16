@@ -1,0 +1,7 @@
+name = "subbasses-play-counts"
+main = "worker.js"
+compatibility_date = "2026-07-16"
+
+kv_namespaces = [
+  { binding = "play_counts", id = "REPLACE_WITH_KV_NAMESPACE_ID" }
+]
